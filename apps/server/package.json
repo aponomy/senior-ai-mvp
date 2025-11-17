@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Cloudflare Pages server for Senior AI MVP",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler pages dev src/index.ts --port 8787",
+    "build": "tsc",
+    "deploy": "wrangler pages deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251117.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.47.0"
+  },
+  "dependencies": {
+    "hono": "^4.10.6"
+  }
+}

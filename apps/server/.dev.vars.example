@@ -1,0 +1,8 @@
+# Server Environment Variables
+# Copy this file to .dev.vars for local development
+
+# Example: Database connection string
+# DATABASE_URL=your-database-url
+
+# Example: API keys
+# API_KEY=your-api-key

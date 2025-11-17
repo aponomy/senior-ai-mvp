@@ -1,0 +1,42 @@
+{
+  "folders": [
+    {
+      "name": "🎯 Root",
+      "path": "."
+    },
+    {
+      "name": "⚛️ Client",
+      "path": "./apps/client"
+    },
+    {
+      "name": "☁️ Server",
+      "path": "./apps/server"
+    }
+  ],
+  "settings": {
+    "typescript.tsdk": "apps/client/node_modules/typescript/lib",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.wrangler": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.wrangler": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "bradlc.vscode-tailwindcss",
+      "ms-vscode.vscode-typescript-next"
+    ]
+  }
+}

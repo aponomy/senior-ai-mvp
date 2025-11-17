@@ -1,0 +1,109 @@
+{
+  "topics": [
+    {
+      "id": "1",
+      "title": "Artificiell Intelligens",
+      "size": "large",
+      "count": 45,
+      "lastActivity": "2025-11-17T10:30:00Z"
+    },
+    {
+      "id": "2",
+      "title": "React Development",
+      "size": "large",
+      "count": 38,
+      "lastActivity": "2025-11-17T09:15:00Z"
+    },
+    {
+      "id": "3",
+      "title": "Machine Learning",
+      "size": "medium",
+      "count": 28,
+      "lastActivity": "2025-11-16T14:20:00Z"
+    },
+    {
+      "id": "4",
+      "title": "TypeScript",
+      "size": "medium",
+      "count": 25,
+      "lastActivity": "2025-11-16T11:45:00Z"
+    },
+    {
+      "id": "5",
+      "title": "UI/UX Design",
+      "size": "medium",
+      "count": 22,
+      "lastActivity": "2025-11-15T16:30:00Z"
+    },
+    {
+      "id": "6",
+      "title": "Database Optimization",
+      "size": "small",
+      "count": 15,
+      "lastActivity": "2025-11-15T08:10:00Z"
+    },
+    {
+      "id": "7",
+      "title": "Cloud Computing",
+      "size": "medium",
+      "count": 20,
+      "lastActivity": "2025-11-14T13:00:00Z"
+    },
+    {
+      "id": "8",
+      "title": "API Development",
+      "size": "small",
+      "count": 12,
+      "lastActivity": "2025-11-14T10:25:00Z"
+    },
+    {
+      "id": "9",
+      "title": "DevOps",
+      "size": "small",
+      "count": 10,
+      "lastActivity": "2025-11-13T15:40:00Z"
+    },
+    {
+      "id": "10",
+      "title": "Web Security",
+      "size": "medium",
+      "count": 18,
+      "lastActivity": "2025-11-13T09:30:00Z"
+    },
+    {
+      "id": "11",
+      "title": "Performance",
+      "size": "small",
+      "count": 8,
+      "lastActivity": "2025-11-12T14:15:00Z"
+    },
+    {
+      "id": "12",
+      "title": "Testing",
+      "size": "small",
+      "count": 7,
+      "lastActivity": "2025-11-12T11:20:00Z"
+    },
+    {
+      "id": "13",
+      "title": "Microservices",
+      "size": "small",
+      "count": 9,
+      "lastActivity": "2025-11-11T16:45:00Z"
+    },
+    {
+      "id": "14",
+      "title": "GraphQL",
+      "size": "small",
+      "count": 6,
+      "lastActivity": "2025-11-11T10:00:00Z"
+    },
+    {
+      "id": "15",
+      "title": "Docker",
+      "size": "small",
+      "count": 11,
+      "lastActivity": "2025-11-10T13:30:00Z"
+    }
+  ]
+}

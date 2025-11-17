@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DynamicCard from '../components/cards/DynamicCard';
 
@@ -14,6 +14,12 @@ export default function NewConversation() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Auto-focus input field when component mounts
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -270,6 +276,7 @@ export default function NewConversation() {
             }}
           >
             <input
+              ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}

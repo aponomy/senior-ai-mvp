@@ -32,6 +32,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   image?: string | ReactNode;
   category?: ReactNode;
   label?: ReactNode;
+  labelFontSize?: number | string;
   children?: ReactNode;
   footer?: ReactNode;
   
@@ -65,6 +66,7 @@ export default function DynamicCard({
   image,
   category,
   label,
+  labelFontSize,
   children,
   footer,
   contentAlign = 'center',
@@ -365,7 +367,14 @@ export default function DynamicCard({
         
         {category && <div className="dynamic-card__category">{category}</div>}
         
-        {label && <div className="dynamic-card__label">{label}</div>}
+        {label && (
+          <div 
+            className="dynamic-card__label"
+            style={labelFontSize ? { fontSize: labelFontSize } : undefined}
+          >
+            {label}
+          </div>
+        )}
         
         {children && <div className="dynamic-card__body">{children}</div>}
         

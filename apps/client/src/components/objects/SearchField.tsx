@@ -52,7 +52,7 @@ export default function SearchField({
         {/* Expandable Search Field */}
         <div style={{
           position: 'relative',
-          width: isSearchFocused ? '400px' : '200px',
+          width: isSearchFocused ? '500px' : '250px',
           transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         }}>
           <div style={{

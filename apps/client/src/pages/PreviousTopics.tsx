@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DynamicCard from '../components/cards/DynamicCard';
+import PageContainer from '../components/PageContainer';
 import topicsData from '../data/topics.json';
 
 type Topic = {
@@ -106,34 +107,9 @@ export default function PreviousTopics() {
   }, [topics]);
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(180deg, #0a0b0f 0%, #1a1b2f 100%)',
-        padding: '40px',
-        paddingBottom: '120px', // Space for footer
-      }}
-    >
-      {/* Header */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: '40px',
-        }}
-      >
-        <h1
-          style={{
-            color: 'white',
-            fontSize: '36px',
-            fontWeight: 600,
-            margin: 0,
-          }}
-        >
-          Tidigare Ämnen
-        </h1>
-        
+    <PageContainer
+      label="Tidigare Ämnen"
+      tools={
         <button
           onClick={() => navigate('/')}
           style={{
@@ -161,59 +137,61 @@ export default function PreviousTopics() {
         >
           ✕
         </button>
-      </div>
-
-      {/* Topics Grid - CSS Grid with Skyline Algorithm Placement */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: `repeat(${columns}, 20px)`,
-          gridAutoRows: '20px',
-          gridAutoFlow: 'dense',
-          gap: '0px',
-        }}
-      >
-        {positionedTopics.map((topic) => {
-          const config = sizeConfig[topic.size];
-          
-          return (
-            <div
-              key={topic.id}
-              style={{
-                gridColumn: `${topic.gridColumn} / span ${topic.span}`,
-                gridRow: `${topic.gridRow} / span ${topic.span}`,
-                padding: '5px',
-              }}
-            >
-              <DynamicCard
-                width={topic.span * 20 - 10}
-                height={topic.span * 20 - 10}
-                accent={config.accent}
-                showBorder={true}
-                borderColor={config.accent}
-                borderOpacity={0.4}
-                lightIntensity={config.lightIntensity}
-                showClouds={true}
-                rippleEnabled={true}
-                label={topic.title}
-                labelFontSize={config.fontSize}
-                footer={
-                  <div style={{ fontSize: '14px', opacity: 0.7, marginTop: '8px' }}>
-                    {topic.count} konversationer
-                  </div>
-                }
-                onClick={() => {
-                  console.log(`Clicked topic: ${topic.title}`);
-                  // TODO: Navigate to topic details or conversations
-                }}
+      }
+    >
+      <div style={{ padding: '40px' }}>
+        {/* Topics Grid - CSS Grid with Skyline Algorithm Placement */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${columns}, 20px)`,
+            gridAutoRows: '20px',
+            gridAutoFlow: 'dense',
+            gap: '0px',
+          }}
+        >
+          {positionedTopics.map((topic) => {
+            const config = sizeConfig[topic.size];
+            
+            return (
+              <div
+                key={topic.id}
                 style={{
-                  cursor: 'pointer',
+                  gridColumn: `${topic.gridColumn} / span ${topic.span}`,
+                  gridRow: `${topic.gridRow} / span ${topic.span}`,
+                  padding: '5px',
                 }}
-              />
-            </div>
-          );
-        })}
+              >
+                <DynamicCard
+                  width={topic.span * 20 - 10}
+                  height={topic.span * 20 - 10}
+                  accent={config.accent}
+                  showBorder={true}
+                  borderColor={config.accent}
+                  borderOpacity={0.4}
+                  lightIntensity={config.lightIntensity}
+                  showClouds={true}
+                  rippleEnabled={true}
+                  label={topic.title}
+                  labelFontSize={config.fontSize}
+                  footer={
+                    <div style={{ fontSize: '14px', opacity: 0.7, marginTop: '8px' }}>
+                      {topic.count} konversationer
+                    </div>
+                  }
+                  onClick={() => {
+                    console.log(`Clicked topic: ${topic.title}`);
+                    // TODO: Navigate to topic details or conversations
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }

@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDashboard } from '../context/DashboardContext';
 
 export default function Footer() {
   const { activeObjects, toggleObject, hideObject } = useDashboard();
   const [isListening, setIsListening] = useState(false);
+  const [message, setMessage] = useState('');
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const isChatActive = activeObjects.some(obj => obj.id === 'chatWindow');
   const isClusterActive = activeObjects.some(obj => obj.id === 'clusterCard');
@@ -15,6 +18,14 @@ export default function Footer() {
     if (isSettingsActive && objectId !== 'settings') {
       hideObject('settings');
     }
+    
+    // Make clusterCard and functions mutually exclusive
+    if (objectId === 'clusterCard' && isFunctionsActive) {
+      hideObject('functions');
+    } else if (objectId === 'functions' && isClusterActive) {
+      hideObject('clusterCard');
+    }
+    
     toggleObject(objectId);
   };
 
@@ -26,7 +37,310 @@ export default function Footer() {
     console.log(isListening ? 'Stopped listening' : 'Started listening');
   };
 
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      console.log('Send message:', message);
+      // TODO: Send message to backend
+      setMessage('');
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setShowMenu(false);
+      }
+    };
+
+    if (showMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showMenu]);
+
   return (
+    <>
+      {/* Text Input Field - shown when not listening and positioned above footer */}
+      {!isListening && (
+        <div
+          style={{
+            position: 'fixed',
+            bottom: '80px', // Align to footer top
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '600px',
+            maxWidth: 'calc(100vw - 80px)',
+            zIndex: 2100,
+            animation: 'slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              gap: '8px',
+              background: 'rgba(26, 27, 47, 0.95)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '12px',
+              padding: '8px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+            }}
+          >
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Skriv ditt meddelande..."
+              style={{
+                flex: 1,
+                padding: '12px 16px',
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '8px',
+                color: 'white',
+                fontSize: '14px',
+                outline: 'none',
+                transition: 'all 0.2s ease',
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                e.currentTarget.style.borderColor = 'rgba(96, 165, 250, 0.5)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+              }}
+            />
+            <button
+              onClick={handleSendMessage}
+              disabled={!message.trim()}
+              style={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '50%',
+                background: message.trim()
+                  ? 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)'
+                  : 'rgba(255, 255, 255, 0.1)',
+                border: 'none',
+                color: 'white',
+                cursor: message.trim() ? 'pointer' : 'not-allowed',
+                transition: 'all 0.2s ease',
+                opacity: message.trim() ? 1 : 0.5,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: message.trim() ? '0 4px 12px rgba(96, 165, 250, 0.3)' : 'none',
+              }}
+              onMouseEnter={(e) => {
+                if (message.trim()) {
+                  e.currentTarget.style.transform = 'scale(1.1)';
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(96, 165, 250, 0.5)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.boxShadow = message.trim() ? '0 4px 12px rgba(96, 165, 250, 0.3)' : 'none';
+              }}
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Three-dot menu dropdown */}
+      {showMenu && (
+        <div
+          ref={menuRef}
+          style={{
+            position: 'fixed',
+            bottom: '80px', // Align to top of footer (same as footer height)
+            left: '20px',
+            background: 'rgba(26, 27, 47, 0.98)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '12px',
+            padding: '8px',
+            zIndex: 2200,
+            minWidth: '200px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+            animation: 'fadeIn 0.2s ease',
+          }}
+        >
+          <button
+            onClick={() => {
+              setShowMenu(false);
+              handleButtonClick('settings');
+            }}
+            style={{
+              width: '100%',
+              padding: '12px 16px',
+              background: 'transparent',
+              border: 'none',
+              color: 'white',
+              fontSize: '14px',
+              textAlign: 'left',
+              cursor: 'pointer',
+              borderRadius: '8px',
+              transition: 'background 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+            }}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m-2 2l-4.2 4.2M1 12h6m6 0h6m-13.2 5.2l4.2-4.2m2-2l4.2-4.2" />
+            </svg>
+            Inställningar
+          </button>
+          <button
+            onClick={() => {
+              setShowMenu(false);
+              console.log('Show about dialog');
+              // TODO: Show about dialog
+            }}
+            style={{
+              width: '100%',
+              padding: '12px 16px',
+              background: 'transparent',
+              border: 'none',
+              color: 'white',
+              fontSize: '14px',
+              textAlign: 'left',
+              cursor: 'pointer',
+              borderRadius: '8px',
+              transition: 'background 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+            }}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            Om Senior AI
+          </button>
+          <button
+            onClick={() => {
+              setShowMenu(false);
+              console.log('Show account settings');
+              // TODO: Show account settings
+            }}
+            style={{
+              width: '100%',
+              padding: '12px 16px',
+              background: 'transparent',
+              border: 'none',
+              color: 'white',
+              fontSize: '14px',
+              textAlign: 'left',
+              cursor: 'pointer',
+              borderRadius: '8px',
+              transition: 'background 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+            }}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            Konto...
+          </button>
+        </div>
+      )}
+
     <footer
       style={{
         position: 'fixed',
@@ -44,6 +358,50 @@ export default function Footer() {
         gap: '24px',
       }}
     >
+      {/* Three-dot Menu Button - Left Side */}
+      <button
+        onClick={() => setShowMenu(prev => !prev)}
+        style={{
+          position: 'absolute',
+          left: '20px',
+          width: '48px',
+          height: '48px',
+          borderRadius: '50%',
+          background: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          opacity: showMenu ? 1 : 0.6,
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.opacity = '1';
+        }}
+        onMouseLeave={(e) => {
+          if (!showMenu) {
+            e.currentTarget.style.opacity = '0.6';
+          }
+        }}
+        aria-label="Menu"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#9ca3af"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="12" cy="5" r="1" />
+          <circle cx="12" cy="12" r="1" />
+          <circle cx="12" cy="19" r="1" />
+        </svg>
+      </button>
+
       {/* Topics/Cluster Button */}
       <button
         onClick={() => handleButtonClick('clusterCard')}
@@ -351,7 +709,7 @@ export default function Footer() {
         </svg>
       </button>
 
-      {/* Add keyframe animation for pulse */}
+      {/* Add keyframe animations */}
       <style>
         {`
           @keyframes pulse {
@@ -364,8 +722,27 @@ export default function Footer() {
               opacity: 0;
             }
           }
+          @keyframes slideUp {
+            from {
+              transform: translateX(-50%) translateY(20px);
+              opacity: 0;
+            }
+            to {
+              transform: translateX(-50%) translateY(0);
+              opacity: 1;
+            }
+          }
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+            }
+            to {
+              opacity: 1;
+            }
+          }
         `}
       </style>
     </footer>
+    </>
   );
 }

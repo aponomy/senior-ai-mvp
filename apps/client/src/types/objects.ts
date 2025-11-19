@@ -139,10 +139,10 @@ export const OBJECT_CONFIGS: Record<ObjectId, ObjectConfig> = {
     states: {
       full: {
         align: 'left',
-        maxWidthPx: 200,
+        widthPercent: 100,
         heightPercent: 100,
         canShareHorizontal: true,
-        canShareVertical: false,
+        canShareVertical: true,
       },
     },
   },

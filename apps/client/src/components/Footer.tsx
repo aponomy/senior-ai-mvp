@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDashboard } from '../context/DashboardContext';
 
 export default function Footer() {
-  const { activeObjects, toggleObject } = useDashboard();
+  const { activeObjects, toggleObject, hideObject } = useDashboard();
   const [isListening, setIsListening] = useState(false);
 
   const isChatActive = activeObjects.some(obj => obj.id === 'chatWindow');
@@ -10,7 +10,18 @@ export default function Footer() {
   const isSettingsActive = activeObjects.some(obj => obj.id === 'settings');
   const isFunctionsActive = activeObjects.some(obj => obj.id === 'functions');
 
+  // Helper to handle button clicks - closes settings if open
+  const handleButtonClick = (objectId: string) => {
+    if (isSettingsActive && objectId !== 'settings') {
+      hideObject('settings');
+    }
+    toggleObject(objectId);
+  };
+
   const toggleListening = () => {
+    if (isSettingsActive) {
+      hideObject('settings');
+    }
     setIsListening(prev => !prev);
     console.log(isListening ? 'Stopped listening' : 'Started listening');
   };
@@ -29,13 +40,13 @@ export default function Footer() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 1000,
+        zIndex: 2100,
         gap: '24px',
       }}
     >
       {/* Topics/Cluster Button */}
       <button
-        onClick={() => toggleObject('clusterCard')}
+        onClick={() => handleButtonClick('clusterCard')}
         style={{
           width: '48px',
           height: '48px',
@@ -88,62 +99,9 @@ export default function Footer() {
         </svg>
       </button>
 
-      {/* Settings Button */}
-      <button
-        onClick={() => toggleObject('settings')}
-        style={{
-          width: '48px',
-          height: '48px',
-          borderRadius: '50%',
-          background: isSettingsActive 
-            ? 'rgba(251, 191, 36, 0.4)' 
-            : 'rgba(251, 191, 36, 0.15)',
-          border: isSettingsActive 
-            ? '2px solid rgba(251, 191, 36, 0.8)' 
-            : '2px solid rgba(251, 191, 36, 0.3)',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          boxShadow: isSettingsActive 
-            ? '0 0 20px rgba(251, 191, 36, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3)' 
-            : '0 4px 12px rgba(0, 0, 0, 0.3)',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.1)';
-          if (!isSettingsActive) {
-            e.currentTarget.style.background = 'rgba(251, 191, 36, 0.25)';
-            e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.5)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
-          if (!isSettingsActive) {
-            e.currentTarget.style.background = 'rgba(251, 191, 36, 0.15)';
-            e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.3)';
-          }
-        }}
-        aria-label="Toggle settings"
-      >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#fbbf24"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="3" />
-          <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m-2 2l-4.2 4.2M1 12h6m6 0h6m-13.2 5.2l4.2-4.2m2-2l4.2-4.2" />
-        </svg>
-      </button>
-
       {/* Functions Button */}
       <button
-        onClick={() => toggleObject('functions')}
+        onClick={() => handleButtonClick('functions')}
         style={{
           width: '48px',
           height: '48px',
@@ -288,9 +246,62 @@ export default function Footer() {
         </svg>
       </button>
 
+      {/* Settings Button */}
+      <button
+        onClick={() => handleButtonClick('settings')}
+        style={{
+          width: '48px',
+          height: '48px',
+          borderRadius: '50%',
+          background: isSettingsActive 
+            ? 'rgba(251, 191, 36, 0.4)' 
+            : 'rgba(251, 191, 36, 0.15)',
+          border: isSettingsActive 
+            ? '2px solid rgba(251, 191, 36, 0.8)' 
+            : '2px solid rgba(251, 191, 36, 0.3)',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          boxShadow: isSettingsActive 
+            ? '0 0 20px rgba(251, 191, 36, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3)' 
+            : '0 4px 12px rgba(0, 0, 0, 0.3)',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'scale(1.1)';
+          if (!isSettingsActive) {
+            e.currentTarget.style.background = 'rgba(251, 191, 36, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.5)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'scale(1)';
+          if (!isSettingsActive) {
+            e.currentTarget.style.background = 'rgba(251, 191, 36, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.3)';
+          }
+        }}
+        aria-label="Toggle settings"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fbbf24"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="12" cy="12" r="3" />
+          <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m-2 2l-4.2 4.2M1 12h6m6 0h6m-13.2 5.2l4.2-4.2m2-2l4.2-4.2" />
+        </svg>
+      </button>
+
       {/* Chat Button */}
       <button
-        onClick={() => toggleObject('chatWindow')}
+        onClick={() => handleButtonClick('chatWindow')}
         style={{
           width: '48px',
           height: '48px',

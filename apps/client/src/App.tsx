@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Footer from './components/Footer';
 import ChatWindow from './components/objects/ChatWindow';
 import TopicCluster from './components/objects/ClusterCard';
+import Functions from './components/objects/Functions';
 import LargeButtons from './components/objects/LargeButtons';
 import SearchField from './components/objects/SearchField';
-import Timeline from './components/objects/Timeline';
 import Settings from './components/objects/Settings';
-import Functions from './components/objects/Functions';
+import Timeline from './components/objects/Timeline';
 import Welcome from './components/objects/Welcome';
 import { DashboardProvider, useDashboard } from './context/DashboardContext';
 import type { Conversation } from './data/conversationHelpers';
@@ -26,6 +26,16 @@ function DashboardContent() {
 
   // Calculate buckets for search field result count
   const buckets = getTimeBuckets(conversations, zoom, searchQuery);
+
+  // Auto-close timeline if topics (Ämnen) is not visible
+  useEffect(() => {
+    const isTopicsVisible = activeObjects.some(obj => obj.id === 'topics');
+    const isTimelineVisible = activeObjects.some(obj => obj.id === 'timeline');
+    
+    if (isTimelineVisible && !isTopicsVisible) {
+      hideObject('timeline');
+    }
+  }, [activeObjects, hideObject]);
 
   const handleZoomIn = () => setZoom(prev => Math.min(prev * 1.5, 4));
   const handleZoomOut = () => setZoom(prev => Math.max(prev / 1.5, 0.25));
@@ -81,6 +91,10 @@ function DashboardContent() {
         if (!isActive) return null;
 
         const isChatWindow = layout.id === 'chatWindow';
+        const isSettings = layout.id === 'settings';
+
+        // Settings is an overlay, handle separately
+        if (isSettings) return null;
 
         return (
           <div
@@ -110,6 +124,7 @@ function DashboardContent() {
                 onZoomOut={handleZoomOut}
                 selectedDate={selectedDate}
                 onDateSelect={setSelectedDate}
+                onClose={() => hideObject('timeline')}
               />
             )}
             {layout.id === 'searchField' && (
@@ -123,9 +138,6 @@ function DashboardContent() {
             {layout.id === 'clusterCard' && (
               <TopicCluster />
             )}
-            {layout.id === 'settings' && (
-              <Settings onClose={() => hideObject('settings')} />
-            )}
             {layout.id === 'functions' && (
               <Functions onClose={() => hideObject('functions')} />
             )}
@@ -135,6 +147,37 @@ function DashboardContent() {
           </div>
         );
       })}
+
+      {/* Settings overlay - slides in from bottom */}
+      {activeObjects.some(obj => obj.id === 'settings') && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 'calc(100vh - 80px)',
+            zIndex: 2000,
+            animation: 'slideInFromBottom 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+          }}
+        >
+          <Settings onClose={() => hideObject('settings')} />
+        </div>
+      )}
+      
+      {/* Keyframes for settings slide-in animation */}
+      <style>
+        {`
+          @keyframes slideInFromBottom {
+            from {
+              transform: translateY(100%);
+            }
+            to {
+              transform: translateY(0);
+            }
+          }
+        `}
+      </style>
 
       <Footer />
     </div>

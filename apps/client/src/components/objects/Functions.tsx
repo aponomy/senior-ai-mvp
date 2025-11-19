@@ -1,5 +1,3 @@
-import DynamicCard from '../cards/DynamicCard';
-
 interface FunctionsProps {
   onClose?: () => void;
 }
@@ -9,117 +7,440 @@ export default function Functions({ onClose }: FunctionsProps) {
     <div
       style={{
         height: '100%',
+        width: '100%',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '40px',
+        flexDirection: 'column',
+        padding: '20px 16px',
         background: 'rgba(10, 11, 15, 0.95)',
         backdropFilter: 'blur(20px)',
+        borderRight: '1px solid rgba(255, 255, 255, 0.1)',
         position: 'relative',
+        overflow: 'auto',
       }}
     >
-      {/* Close button top right */}
-      {onClose && (
-        <button
-          onClick={onClose}
-          style={{
-            position: 'absolute',
-            top: '40px',
-            right: '40px',
-            width: '32px',
-            height: '32px',
-            borderRadius: '8px',
-            border: 'none',
-            backgroundColor: 'rgba(255, 255, 255, 0.08)',
-            color: 'rgba(255, 255, 255, 0.6)',
-            fontSize: '16px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'all 0.2s',
-            zIndex: 10,
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
-            e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
-            e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)';
-          }}
-        >
-          ✕
-        </button>
-      )}
-
+      {/* Header with title and close button */}
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gridTemplateRows: 'repeat(2, 1fr)',
-          gap: '24px',
-          width: '100%',
-          maxWidth: '800px',
-          height: '80%',
-          maxHeight: '800px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '20px',
         }}
       >
-        <DynamicCard
-          size="xl"
-          accent="#4a9eff"
-          showBorder={true}
-          borderColor="#4a9eff"
-          borderOpacity={0.5}
-          lightIntensity={0.4}
-          showClouds={true}
-          rippleEnabled={true}
-          category=""
-          label="Bank"
+        <h3
+          style={{
+            color: 'white',
+            fontSize: '18px',
+            fontWeight: 600,
+            margin: 0,
+          }}
+        >
+          Funktioner
+        </h3>
+        
+        {onClose && (
+          <button
+            onClick={onClose}
+            style={{
+              width: '28px',
+              height: '28px',
+              borderRadius: '6px',
+              border: 'none',
+              backgroundColor: 'rgba(255, 255, 255, 0.08)',
+              color: 'rgba(255, 255, 255, 0.6)',
+              fontSize: '14px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+              e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+              e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)';
+            }}
+          >
+            ✕
+          </button>
+        )}
+      </div>
+
+      {/* Function buttons in a vertical list */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px',
+          flex: 1,
+        }}
+      >
+        <button
           onClick={() => console.log('Bank clicked')}
-        />
-        
-        <DynamicCard
-          size="xl"
-          accent="#9d4eff"
-          showBorder={true}
-          borderColor="#9d4eff"
-          borderOpacity={0.5}
-          lightIntensity={0.35}
-          showClouds={true}
-          rippleEnabled={true}
-          category=""
-          label="Post"
-          onClick={() => console.log('Post clicked')}
-        />
-        
-        <DynamicCard
-          size="xl"
-          accent="#ff4e9d"
-          showBorder={true}
-          borderColor="#ff4e9d"
-          borderOpacity={0.5}
-          lightIntensity={0.3}
-          showClouds={true}
-          rippleEnabled={true}
-          category=""
-          label="Sjukvård"
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(74, 158, 255, 0.3)',
+            background: 'rgba(74, 158, 255, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(74, 158, 255, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(74, 158, 255, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(74, 158, 255, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(74, 158, 255, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Bank
+        </button>
+
+        <button
+          onClick={() => console.log('Post och Bud clicked')}
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(157, 78, 255, 0.3)',
+            background: 'rgba(157, 78, 255, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(157, 78, 255, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(157, 78, 255, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(157, 78, 255, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(157, 78, 255, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Post och Bud
+        </button>
+
+        <button
           onClick={() => console.log('Sjukvård clicked')}
-        />
-        
-        <DynamicCard
-          size="xl"
-          accent="#4effc8"
-          showBorder={true}
-          borderColor="#4effc8"
-          borderOpacity={0.5}
-          lightIntensity={0.25}
-          showClouds={true}
-          rippleEnabled={true}
-          category=""
-          label="Transport"
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(255, 78, 157, 0.3)',
+            background: 'rgba(255, 78, 157, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 78, 157, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(255, 78, 157, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 78, 157, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(255, 78, 157, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Sjukvård
+        </button>
+
+        <button
           onClick={() => console.log('Transport clicked')}
-        />
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(78, 255, 200, 0.3)',
+            background: 'rgba(78, 255, 200, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(78, 255, 200, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(78, 255, 200, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(78, 255, 200, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(78, 255, 200, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Transport
+        </button>
+
+        <button
+          onClick={() => console.log('Säkerhet clicked')}
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(255, 165, 0, 0.3)',
+            background: 'rgba(255, 165, 0, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 165, 0, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(255, 165, 0, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 165, 0, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(255, 165, 0, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Säkerhet
+        </button>
+
+        <button
+          onClick={() => console.log('Meddelanden clicked')}
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(100, 200, 255, 0.3)',
+            background: 'rgba(100, 200, 255, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(100, 200, 255, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(100, 200, 255, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(100, 200, 255, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(100, 200, 255, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Meddelanden
+        </button>
+
+        <button
+          onClick={() => console.log('Video clicked')}
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(220, 38, 38, 0.3)',
+            background: 'rgba(220, 38, 38, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(220, 38, 38, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(220, 38, 38, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(220, 38, 38, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(220, 38, 38, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Video
+        </button>
+
+        <button
+          onClick={() => console.log('Foto clicked')}
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(236, 72, 153, 0.3)',
+            background: 'rgba(236, 72, 153, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(236, 72, 153, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(236, 72, 153, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(236, 72, 153, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(236, 72, 153, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Foto
+        </button>
+
+        <button
+          onClick={() => console.log('Konst clicked')}
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(168, 85, 247, 0.3)',
+            background: 'rgba(168, 85, 247, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(168, 85, 247, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(168, 85, 247, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Konst
+        </button>
+
+        <button
+          onClick={() => console.log('Musik clicked')}
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(52, 211, 153, 0.3)',
+            background: 'rgba(52, 211, 153, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(52, 211, 153, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(52, 211, 153, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Musik
+        </button>
+
+        <button
+          onClick={() => console.log('Evenemang clicked')}
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(251, 146, 60, 0.3)',
+            background: 'rgba(251, 146, 60, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(251, 146, 60, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(251, 146, 60, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(251, 146, 60, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(251, 146, 60, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Evenemang
+        </button>
+
+        <button
+          onClick={() => console.log('Sällskap clicked')}
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(244, 114, 182, 0.3)',
+            background: 'rgba(244, 114, 182, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(244, 114, 182, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(244, 114, 182, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(244, 114, 182, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(244, 114, 182, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Sällskap
+        </button>
+
+        <button
+          onClick={() => console.log('Spel clicked')}
+          style={{
+            padding: '16px 12px',
+            borderRadius: '12px',
+            border: '1px solid rgba(59, 130, 246, 0.3)',
+            background: 'rgba(59, 130, 246, 0.15)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(59, 130, 246, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+            e.currentTarget.style.transform = 'translateX(4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(59, 130, 246, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
+        >
+          Spel
+        </button>
       </div>
     </div>
   );

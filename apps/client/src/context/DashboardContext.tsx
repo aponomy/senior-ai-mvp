@@ -41,7 +41,11 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const showObject = (objectId: string) => {
-    setActiveObjects(prev => addObject(objectId, prev));
+    setActiveObjects(prev => {
+      // Hide welcome screen when showing any other object
+      const filtered = prev.filter(obj => obj.id !== 'welcome');
+      return addObject(objectId, filtered);
+    });
   };
 
   const hideObject = (objectId: string) => {
@@ -53,7 +57,11 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     if (isActive) {
       hideObject(objectId);
     } else {
-      showObject(objectId);
+      // Hide welcome when toggling any object on
+      setActiveObjects(prev => {
+        const filtered = prev.filter(obj => obj.id !== 'welcome');
+        return addObject(objectId, filtered);
+      });
     }
   };
 

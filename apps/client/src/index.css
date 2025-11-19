@@ -49,3 +49,18 @@
     --color-ring: 212.7 26.8% 83.9%;
   }
 }
+
+/* Prevent rubber band scroll on macOS/iOS */
+html, body {
+  overscroll-behavior: none;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}

@@ -8,6 +8,7 @@ interface TimelineProps {
   onZoomOut: () => void;
   selectedDate: Date;
   onDateSelect: (date: Date) => void;
+  onClose?: () => void;
 }
 
 export default function Timeline({
@@ -17,6 +18,7 @@ export default function Timeline({
   onZoomOut,
   selectedDate,
   onDateSelect,
+  onClose,
 }: TimelineProps) {
   const timelineRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
@@ -66,6 +68,41 @@ export default function Timeline({
       display: 'flex',
       flexDirection: 'column',
     }}>
+      {/* Close button - top right */}
+      {onClose && (
+        <button
+          onClick={onClose}
+          style={{
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+            width: '28px',
+            height: '28px',
+            borderRadius: '6px',
+            border: 'none',
+            backgroundColor: 'rgba(255, 255, 255, 0.08)',
+            color: 'rgba(255, 255, 255, 0.6)',
+            fontSize: '14px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.2s',
+            zIndex: 10,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+            e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+            e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)';
+          }}
+        >
+          ✕
+        </button>
+      )}
+      
       {/* Zoom Controls */}
       <div style={{
         display: 'flex',

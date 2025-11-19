@@ -42,6 +42,11 @@ export function calculateLayout(
       ? config.states.collapsed 
       : config.states.full;
     return posConfig.align === 'left';
+  }).sort((a, b) => {
+    // Ensure 'functions' comes before other left-aligned objects
+    if (a.id === 'functions') return -1;
+    if (b.id === 'functions') return 1;
+    return 0;
   });
 
   const rightAligned = activeObjects.filter(obj => {
@@ -165,13 +170,16 @@ export function calculateLayout(
       ? config.states.collapsed 
       : config.states.full;
 
+    // Calculate remaining width after previous left-aligned objects
+    const remainingWidth = availableWidth - leftOccupied;
+
     let width: number;
     if (posConfig.maxWidthPx) {
-      width = Math.min(posConfig.maxWidthPx, availableWidth);
+      width = Math.min(posConfig.maxWidthPx, remainingWidth);
     } else if (posConfig.widthPercent) {
-      width = availableWidth * (posConfig.widthPercent / 100);
+      width = remainingWidth * (posConfig.widthPercent / 100);
     } else {
-      width = availableWidth;
+      width = remainingWidth;
     }
 
     layouts.push({

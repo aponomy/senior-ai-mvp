@@ -125,7 +125,7 @@ export const OBJECT_CONFIGS: Record<ObjectId, ObjectConfig> = {
     canCollapse: false,
     states: {
       full: {
-        align: 'left',
+        align: 'left', // Will be positioned as overlay in App.tsx
         widthPercent: 100,
         heightPercent: 100,
         canShareHorizontal: false,
@@ -139,9 +139,9 @@ export const OBJECT_CONFIGS: Record<ObjectId, ObjectConfig> = {
     states: {
       full: {
         align: 'left',
-        widthPercent: 100,
+        maxWidthPx: 200,
         heightPercent: 100,
-        canShareHorizontal: false,
+        canShareHorizontal: true,
         canShareVertical: false,
       },
     },

@@ -1,14 +1,37 @@
 # senior-ai-mvp
 
-A modern full-stack application with a React frontend and Cloudflare Pages backend.
+A modern full-stack application with an object-based dashboard architecture, React frontend, and Cloudflare Pages backend.
+
+## Architecture
+
+This application uses an **object-based dashboard** instead of traditional page routing. Users interact with dynamic "objects" (Timeline, Chat Window, Search, etc.) that appear and reposition themselves on the dashboard based on user actions.
+
+For detailed architecture documentation, see [ARCHITECTURE.md](./ARCHITECTURE.md).
 
 ## Project Structure
 
 ```
 senior-ai-mvp/
 ├── apps/
-│   ├── client/          # Vite + React + TypeScript + shadcn/ui
+│   ├── client/          # Vite + React + TypeScript
+│   │   ├── src/
+│   │   │   ├── components/
+│   │   │   │   ├── objects/        # Dashboard objects
+│   │   │   │   │   ├── Timeline.tsx
+│   │   │   │   │   ├── ChatWindow.tsx
+│   │   │   │   │   ├── SearchField.tsx
+│   │   │   │   │   ├── ClusterCard.tsx
+│   │   │   │   │   └── LargeButtons.tsx
+│   │   │   │   └── Footer.tsx
+│   │   │   ├── context/
+│   │   │   │   └── DashboardContext.tsx  # State management
+│   │   │   ├── lib/
+│   │   │   │   └── layoutEngine.ts       # Layout algorithm
+│   │   │   ├── types/
+│   │   │   │   └── objects.ts            # Type definitions
+│   │   │   └── App.tsx                   # Main app
 │   └── server/          # Cloudflare Pages + Hono
+├── ARCHITECTURE.md      # Detailed architecture docs
 └── README.md
 ```
 
@@ -17,8 +40,10 @@ senior-ai-mvp/
 ### Client (`apps/client`)
 - **Framework**: Vite + React 18
 - **Language**: TypeScript
-- **UI Library**: shadcn/ui (with Tailwind CSS + Radix UI)
-- **Styling**: Tailwind CSS with CSS variables for theming
+- **UI Components**: Custom components with glass morphism effects
+- **Styling**: CSS-in-JS with Tailwind utility classes
+- **State Management**: React Context API
+- **Layout Engine**: Custom skyline-based algorithm
 - **Build Tool**: Vite
 
 ### Server (`apps/server`)
@@ -26,6 +51,27 @@ senior-ai-mvp/
 - **Framework**: Hono (lightweight web framework)
 - **Language**: TypeScript
 - **Tooling**: Wrangler CLI
+
+## Key Features
+
+### Object-Based Dashboard
+- **Dynamic Layout**: Objects position themselves based on configured rules
+- **Responsive**: Automatically recalculates on window resize
+- **Smooth Transitions**: All position changes are animated
+- **No Routing**: Single-page application with object visibility control
+
+### Available Objects
+1. **Large Buttons** - Main navigation grid (4 buttons)
+2. **Timeline** - Interactive timeline with zoom controls
+3. **Chat Window** - AI conversation interface with glass morphism
+4. **Search Field** - Expandable search with filters
+5. **Cluster Card** - 3D stacked conversation view
+
+### Layout Rules
+- Objects have specific alignments (top, bottom, left, right)
+- Some objects can share space, others take full width/height
+- Footer always visible at bottom (80px)
+- Automatic space calculation for optimal layout
 
 ## Getting Started
 

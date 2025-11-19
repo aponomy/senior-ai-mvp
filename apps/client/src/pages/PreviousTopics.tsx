@@ -111,6 +111,7 @@ export default function PreviousTopics() {
         minHeight: '100vh',
         background: 'linear-gradient(180deg, #0a0b0f 0%, #1a1b2f 100%)',
         padding: '40px',
+        paddingBottom: '120px', // Space for footer
       }}
     >
       {/* Header */}

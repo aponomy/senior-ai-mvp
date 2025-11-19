@@ -97,6 +97,7 @@ export default function NewConversation() {
         background: 'linear-gradient(180deg, #0a0b0f 0%, #1a1b2f 100%)',
         display: 'flex',
         padding: '40px',
+        paddingBottom: '120px', // Space for footer
         gap: '40px',
       }}
     >

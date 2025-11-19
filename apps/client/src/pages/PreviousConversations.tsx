@@ -156,6 +156,7 @@ export default function PreviousConversations() {
         position: 'relative',
         overflow: 'hidden',
         perspective: '2000px',
+        paddingBottom: '80px', // Space for footer
       }}
     >
       {/* Header */}

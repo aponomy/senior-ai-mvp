@@ -8,7 +8,10 @@ export type ObjectId =
   | 'largeButtons' 
   | 'searchField' 
   | 'clusterCard'
-  | 'topics';
+  | 'topics'
+  | 'settings'
+  | 'functions'
+  | 'welcome';
 
 export interface PositionConfig {
   align: ObjectPosition;
@@ -114,6 +117,45 @@ export const OBJECT_CONFIGS: Record<ObjectId, ObjectConfig> = {
         heightPercent: 100,
         canShareHorizontal: true,
         canShareVertical: true,
+      },
+    },
+  },
+  settings: {
+    id: 'settings',
+    canCollapse: false,
+    states: {
+      full: {
+        align: 'left',
+        widthPercent: 100,
+        heightPercent: 100,
+        canShareHorizontal: false,
+        canShareVertical: false,
+      },
+    },
+  },
+  functions: {
+    id: 'functions',
+    canCollapse: false,
+    states: {
+      full: {
+        align: 'left',
+        widthPercent: 100,
+        heightPercent: 100,
+        canShareHorizontal: false,
+        canShareVertical: false,
+      },
+    },
+  },
+  welcome: {
+    id: 'welcome',
+    canCollapse: false,
+    states: {
+      full: {
+        align: 'left',
+        widthPercent: 100,
+        heightPercent: 100,
+        canShareHorizontal: false,
+        canShareVertical: false,
       },
     },
   },

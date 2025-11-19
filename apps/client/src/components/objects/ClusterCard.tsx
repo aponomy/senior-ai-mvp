@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useDashboard } from '../../context/DashboardContext';
 import topicsData from '../../data/topics.json';
 import DynamicCard from '../cards/DynamicCard';
 
@@ -85,9 +86,13 @@ interface TopicClusterProps {
 
 export default function TopicCluster({ onClose }: TopicClusterProps) {
   const topics = topicsData.topics as Topic[];
+  const { activeObjects, toggleObject } = useDashboard();
   const [viewMode, setViewMode] = useState<'clustered' | 'skyline'>('clustered');
   const [positionedTopics, setPositionedTopics] = useState<PositionedTopic[]>([]);
   const [columns, setColumns] = useState(60);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const isTimelineActive = activeObjects.some(obj => obj.id === 'timeline');
 
   useEffect(() => {
     if (viewMode === 'skyline') {
@@ -136,49 +141,204 @@ export default function TopicCluster({ onClose }: TopicClusterProps) {
         </h2>
         
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          {/* View Mode Toggle */}
-          <div style={{
-            display: 'flex',
-            background: 'rgba(255, 255, 255, 0.05)',
-            borderRadius: '12px',
-            padding: '4px',
-            gap: '4px',
-          }}>
-            <button
-              onClick={() => setViewMode('clustered')}
+          {/* Search Field */}
+          <div style={{ position: 'relative', marginRight: '12px' }}>
+            <input
+              type="text"
+              placeholder="Sök konversation"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               style={{
-                padding: '8px 16px',
-                borderRadius: '8px',
-                border: 'none',
-                background: viewMode === 'clustered' 
-                  ? 'rgba(157, 78, 255, 0.3)' 
-                  : 'transparent',
+                width: '200px',
+                padding: '8px 36px 8px 12px',
+                borderRadius: '20px',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                background: 'rgba(255, 255, 255, 0.05)',
                 color: 'white',
                 fontSize: '14px',
-                cursor: 'pointer',
+                outline: 'none',
                 transition: 'all 0.2s',
               }}
-            >
-              📋 Lista
-            </button>
-            <button
-              onClick={() => setViewMode('skyline')}
+              onFocus={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                e.currentTarget.style.borderColor = 'rgba(167, 139, 250, 0.5)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+              }}
+            />
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.4)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               style={{
-                padding: '8px 16px',
-                borderRadius: '8px',
-                border: 'none',
-                background: viewMode === 'skyline' 
-                  ? 'rgba(157, 78, 255, 0.3)' 
-                  : 'transparent',
-                color: 'white',
-                fontSize: '14px',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
+                position: 'absolute',
+                right: '12px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                pointerEvents: 'none',
               }}
             >
-              🏙️ Skyline
-            </button>
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
           </div>
+
+          {/* View Mode Toggle - Round Buttons */}
+          <button
+            onClick={() => setViewMode('clustered')}
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              border: viewMode === 'clustered' 
+                ? '2px solid rgba(157, 78, 255, 0.8)' 
+                : '1px solid rgba(255, 255, 255, 0.2)',
+              background: viewMode === 'clustered' 
+                ? 'rgba(157, 78, 255, 0.3)' 
+                : 'rgba(255, 255, 255, 0.05)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              if (viewMode !== 'clustered') {
+                e.currentTarget.style.background = 'rgba(157, 78, 255, 0.15)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (viewMode !== 'clustered') {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+              }
+            }}
+            aria-label="Lista view"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={viewMode === 'clustered' ? '#9d4eff' : 'rgba(255, 255, 255, 0.6)'}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="8" y1="6" x2="21" y2="6" />
+              <line x1="8" y1="12" x2="21" y2="12" />
+              <line x1="8" y1="18" x2="21" y2="18" />
+              <line x1="3" y1="6" x2="3.01" y2="6" />
+              <line x1="3" y1="12" x2="3.01" y2="12" />
+              <line x1="3" y1="18" x2="3.01" y2="18" />
+            </svg>
+          </button>
+          
+          <button
+            onClick={() => setViewMode('skyline')}
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              border: viewMode === 'skyline' 
+                ? '2px solid rgba(157, 78, 255, 0.8)' 
+                : '1px solid rgba(255, 255, 255, 0.2)',
+              background: viewMode === 'skyline' 
+                ? 'rgba(157, 78, 255, 0.3)' 
+                : 'rgba(255, 255, 255, 0.05)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              if (viewMode !== 'skyline') {
+                e.currentTarget.style.background = 'rgba(157, 78, 255, 0.15)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (viewMode !== 'skyline') {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+              }
+            }}
+            aria-label="Skyline view"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={viewMode === 'skyline' ? '#9d4eff' : 'rgba(255, 255, 255, 0.6)'}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="3" y="3" width="7" height="9" />
+              <rect x="14" y="3" width="7" height="5" />
+              <rect x="14" y="12" width="7" height="9" />
+              <rect x="3" y="16" width="7" height="5" />
+            </svg>
+          </button>
+
+          {/* Timeline Toggle Button */}
+          <button
+            onClick={() => toggleObject('timeline')}
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              background: isTimelineActive 
+                ? 'rgba(96, 165, 250, 0.4)' 
+                : 'rgba(96, 165, 250, 0.15)',
+              border: isTimelineActive 
+                ? '2px solid rgba(96, 165, 250, 0.8)' 
+                : '2px solid rgba(96, 165, 250, 0.3)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              boxShadow: isTimelineActive 
+                ? '0 0 20px rgba(96, 165, 250, 0.5)' 
+                : 'none',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.1)';
+              if (!isTimelineActive) {
+                e.currentTarget.style.background = 'rgba(96, 165, 250, 0.25)';
+                e.currentTarget.style.borderColor = 'rgba(96, 165, 250, 0.5)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              if (!isTimelineActive) {
+                e.currentTarget.style.background = 'rgba(96, 165, 250, 0.15)';
+                e.currentTarget.style.borderColor = 'rgba(96, 165, 250, 0.3)';
+              }
+            }}
+            aria-label="Toggle timeline"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#60a5fa"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </button>
 
           {onClose && (
             <button

@@ -5,6 +5,9 @@ import TopicCluster from './components/objects/ClusterCard';
 import LargeButtons from './components/objects/LargeButtons';
 import SearchField from './components/objects/SearchField';
 import Timeline from './components/objects/Timeline';
+import Settings from './components/objects/Settings';
+import Functions from './components/objects/Functions';
+import Welcome from './components/objects/Welcome';
 import { DashboardProvider, useDashboard } from './context/DashboardContext';
 import type { Conversation } from './data/conversationHelpers';
 import {
@@ -55,6 +58,11 @@ function DashboardContent() {
     showObject('largeButtons');
   };
 
+  const handleWelcomeStart = () => {
+    hideObject('welcome');
+    showObject('clusterCard');
+  };
+
   return (
     <div
       style={{
@@ -72,6 +80,8 @@ function DashboardContent() {
         const isActive = activeObjects.find(obj => obj.id === layout.id);
         if (!isActive) return null;
 
+        const isChatWindow = layout.id === 'chatWindow';
+
         return (
           <div
             key={layout.id}
@@ -82,7 +92,8 @@ function DashboardContent() {
               width: `${layout.width}px`,
               height: `${layout.height}px`,
               zIndex: layout.zIndex,
-              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+              transform: isChatWindow ? `translateX(${isActive ? '0' : '100%'})` : 'translateX(0)',
             }}
           >
             {layout.id === 'largeButtons' && (
@@ -111,6 +122,15 @@ function DashboardContent() {
             )}
             {layout.id === 'clusterCard' && (
               <TopicCluster />
+            )}
+            {layout.id === 'settings' && (
+              <Settings onClose={() => hideObject('settings')} />
+            )}
+            {layout.id === 'functions' && (
+              <Functions onClose={() => hideObject('functions')} />
+            )}
+            {layout.id === 'welcome' && (
+              <Welcome onStart={handleWelcomeStart} />
             )}
           </div>
         );

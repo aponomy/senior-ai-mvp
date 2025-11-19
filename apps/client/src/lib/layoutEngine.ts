@@ -58,6 +58,28 @@ export function calculateLayout(
   let leftOccupied = 0;
   let rightOccupied = 0;
 
+  // First, calculate right-aligned objects (like chat window) to know how much space they take
+  rightAligned.forEach((obj) => {
+    const config = OBJECT_CONFIGS[obj.id];
+    const posConfig = obj.state === 'collapsed' && config.states.collapsed 
+      ? config.states.collapsed 
+      : config.states.full;
+
+    let width: number;
+    if (posConfig.maxWidthPx) {
+      width = Math.min(posConfig.maxWidthPx, viewport.width);
+    } else if (posConfig.widthPercent) {
+      width = viewport.width * (posConfig.widthPercent / 100);
+    } else {
+      width = viewport.width;
+    }
+
+    rightOccupied = width;
+  });
+
+  // Calculate available width for top/bottom aligned objects (excluding right-aligned space)
+  const availableWidthForFullWidth = viewport.width - rightOccupied;
+
   // Process top-aligned objects first (like search)
   topAligned.forEach((obj, index) => {
     const config = OBJECT_CONFIGS[obj.id];
@@ -66,7 +88,7 @@ export function calculateLayout(
       : config.states.full;
 
     const height = posConfig.fixedHeightPx || (posConfig.heightPercent ? workingHeight * (posConfig.heightPercent / 100) : workingHeight);
-    const width = viewport.width;
+    const width = availableWidthForFullWidth; // Use available width instead of full viewport width
 
     layouts.push({
       id: obj.id,
@@ -88,7 +110,7 @@ export function calculateLayout(
       : config.states.full;
 
     const height = posConfig.fixedHeightPx || (posConfig.heightPercent ? workingHeight * (posConfig.heightPercent / 100) : workingHeight);
-    const width = viewport.width;
+    const width = availableWidthForFullWidth; // Use available width instead of full viewport width
 
     layouts.push({
       id: obj.id,
@@ -131,8 +153,6 @@ export function calculateLayout(
       height: centerHeight,
       zIndex: 90 + index,
     });
-
-    rightOccupied = width;
   });
 
   // Process left-aligned objects (fill remaining space)

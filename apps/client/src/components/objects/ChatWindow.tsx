@@ -99,7 +99,7 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: '32px',
+        borderRadius: '0',
         overflow: 'hidden',
       }}
     >

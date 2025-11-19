@@ -5,10 +5,10 @@ export default function Footer() {
   const { activeObjects, toggleObject } = useDashboard();
   const [isListening, setIsListening] = useState(false);
 
-  const isTimelineActive = activeObjects.some(obj => obj.id === 'timeline');
   const isChatActive = activeObjects.some(obj => obj.id === 'chatWindow');
-  const isSearchActive = activeObjects.some(obj => obj.id === 'searchField');
   const isClusterActive = activeObjects.some(obj => obj.id === 'clusterCard');
+  const isSettingsActive = activeObjects.some(obj => obj.id === 'settings');
+  const isFunctionsActive = activeObjects.some(obj => obj.id === 'functions');
 
   const toggleListening = () => {
     setIsListening(prev => !prev);
@@ -88,56 +88,112 @@ export default function Footer() {
         </svg>
       </button>
 
-      {/* Timeline Button */}
+      {/* Settings Button */}
       <button
-        onClick={() => toggleObject('timeline')}
+        onClick={() => toggleObject('settings')}
         style={{
           width: '48px',
           height: '48px',
           borderRadius: '50%',
-          background: isTimelineActive 
-            ? 'rgba(96, 165, 250, 0.4)' 
-            : 'rgba(96, 165, 250, 0.15)',
-          border: isTimelineActive 
-            ? '2px solid rgba(96, 165, 250, 0.8)' 
-            : '2px solid rgba(96, 165, 250, 0.3)',
+          background: isSettingsActive 
+            ? 'rgba(251, 191, 36, 0.4)' 
+            : 'rgba(251, 191, 36, 0.15)',
+          border: isSettingsActive 
+            ? '2px solid rgba(251, 191, 36, 0.8)' 
+            : '2px solid rgba(251, 191, 36, 0.3)',
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          boxShadow: isTimelineActive 
-            ? '0 0 20px rgba(96, 165, 250, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3)' 
+          boxShadow: isSettingsActive 
+            ? '0 0 20px rgba(251, 191, 36, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3)' 
             : '0 4px 12px rgba(0, 0, 0, 0.3)',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'scale(1.1)';
-          if (!isTimelineActive) {
-            e.currentTarget.style.background = 'rgba(96, 165, 250, 0.25)';
-            e.currentTarget.style.borderColor = 'rgba(96, 165, 250, 0.5)';
+          if (!isSettingsActive) {
+            e.currentTarget.style.background = 'rgba(251, 191, 36, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.5)';
           }
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'scale(1)';
-          if (!isTimelineActive) {
-            e.currentTarget.style.background = 'rgba(96, 165, 250, 0.15)';
-            e.currentTarget.style.borderColor = 'rgba(96, 165, 250, 0.3)';
+          if (!isSettingsActive) {
+            e.currentTarget.style.background = 'rgba(251, 191, 36, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.3)';
           }
         }}
-        aria-label="Toggle timeline"
+        aria-label="Toggle settings"
       >
         <svg
           width="24"
           height="24"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#60a5fa"
+          stroke="#fbbf24"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <circle cx="12" cy="12" r="10" />
-          <polyline points="12 6 12 12 16 14" />
+          <circle cx="12" cy="12" r="3" />
+          <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m-2 2l-4.2 4.2M1 12h6m6 0h6m-13.2 5.2l4.2-4.2m2-2l4.2-4.2" />
+        </svg>
+      </button>
+
+      {/* Functions Button */}
+      <button
+        onClick={() => toggleObject('functions')}
+        style={{
+          width: '48px',
+          height: '48px',
+          borderRadius: '50%',
+          background: isFunctionsActive 
+            ? 'rgba(34, 197, 94, 0.4)' 
+            : 'rgba(34, 197, 94, 0.15)',
+          border: isFunctionsActive 
+            ? '2px solid rgba(34, 197, 94, 0.8)' 
+            : '2px solid rgba(34, 197, 94, 0.3)',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          boxShadow: isFunctionsActive 
+            ? '0 0 20px rgba(34, 197, 94, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3)' 
+            : '0 4px 12px rgba(0, 0, 0, 0.3)',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'scale(1.1)';
+          if (!isFunctionsActive) {
+            e.currentTarget.style.background = 'rgba(34, 197, 94, 0.25)';
+            e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.5)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'scale(1)';
+          if (!isFunctionsActive) {
+            e.currentTarget.style.background = 'rgba(34, 197, 94, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+          }
+        }}
+        aria-label="Toggle functions"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#22c55e"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="12" cy="12" r="1" />
+          <circle cx="19" cy="12" r="1" />
+          <circle cx="5" cy="12" r="1" />
+          <circle cx="12" cy="5" r="1" />
+          <circle cx="12" cy="19" r="1" />
         </svg>
       </button>
 
@@ -232,59 +288,6 @@ export default function Footer() {
         </svg>
       </button>
 
-      {/* Search Button */}
-      <button
-        onClick={() => toggleObject('searchField')}
-        style={{
-          width: '48px',
-          height: '48px',
-          borderRadius: '50%',
-          background: isSearchActive 
-            ? 'rgba(167, 139, 250, 0.4)' 
-            : 'rgba(167, 139, 250, 0.15)',
-          border: isSearchActive 
-            ? '2px solid rgba(167, 139, 250, 0.8)' 
-            : '2px solid rgba(167, 139, 250, 0.3)',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          boxShadow: isSearchActive 
-            ? '0 0 20px rgba(167, 139, 250, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3)' 
-            : '0 4px 12px rgba(0, 0, 0, 0.3)',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.1)';
-          if (!isSearchActive) {
-            e.currentTarget.style.background = 'rgba(167, 139, 250, 0.25)';
-            e.currentTarget.style.borderColor = 'rgba(167, 139, 250, 0.5)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
-          if (!isSearchActive) {
-            e.currentTarget.style.background = 'rgba(167, 139, 250, 0.15)';
-            e.currentTarget.style.borderColor = 'rgba(167, 139, 250, 0.3)';
-          }
-        }}
-        aria-label="Toggle search"
-      >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#a78bfa"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.35-4.35" />
-        </svg>
-      </button>
-
       {/* Chat Button */}
       <button
         onClick={() => toggleObject('chatWindow')}
@@ -336,24 +339,6 @@ export default function Footer() {
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>
       </button>
-
-      {/* Status text */}
-      <div
-        style={{
-          position: 'absolute',
-          left: '50%',
-          bottom: '8px',
-          transform: 'translateX(-50%)',
-          fontSize: '11px',
-          fontWeight: 500,
-          color: isListening ? '#ef4444' : 'rgba(255, 255, 255, 0.4)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.5px',
-          transition: 'color 0.3s ease',
-        }}
-      >
-        {isListening ? 'Listening...' : 'Click to talk'}
-      </div>
 
       {/* Add keyframe animation for pulse */}
       <style>

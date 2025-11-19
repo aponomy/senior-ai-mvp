@@ -16,7 +16,7 @@ const DashboardContext = createContext<DashboardContextType | undefined>(undefin
 
 export function DashboardProvider({ children }: { children: ReactNode }) {
   const [activeObjects, setActiveObjects] = useState<ActiveObject[]>([
-    // Start with no objects active - use footer buttons to activate
+    { id: 'welcome', state: 'full' }, // Start with welcome screen
   ]);
   
   const [viewport, setViewport] = useState({

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useDashboard } from '../context/DashboardContext';
 
 interface PageContainerProps {
   label: string;
@@ -7,50 +8,56 @@ interface PageContainerProps {
 }
 
 export default function PageContainer({ label, tools, children }: PageContainerProps) {
+  const { isTimelineActive } = useDashboard();
+
   return (
-    <div
-      data-name="page-container"
+    <div 
+      data-name="cluster-card"
       style={{
-        height: '100vh',
-        background: 'linear-gradient(180deg, #0a0b0f 0%, #1a1b2f 100%)',
-        display: 'flex',
-        flexDirection: 'column',
-        color: 'white',
-        position: 'relative',
-        overflow: 'hidden',
+        width: '100%',
+        height: 'calc(100vh - 80px)', // Full height minus footer
+        background: 'rgba(10, 11, 15, 0.98)',
+        backdropFilter: 'blur(20px)',
+        overflow: 'auto',
+        padding: '20px',
+        paddingBottom: isTimelineActive ? '180px' : '20px', // Extra padding when timeline is visible
       }}
     >
-      {/* Header */}
-      <div
-        style={{
-          padding: '20px 40px',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(10px)',
-          background: 'rgba(10, 11, 15, 0.7)',
-          zIndex: 10,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 600 }}>
+      {/* Header with tools */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '24px',
+        position: 'sticky',
+        top: 0,
+        zIndex: 10,
+        background: 'rgba(10, 11, 15, 0.98)',
+        backdropFilter: 'blur(20px)',
+        padding: '12px 0',
+        marginLeft: '-20px',
+        marginRight: '-20px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+      }}>
+        <h2 style={{
+          color: 'white',
+          fontSize: '24px',
+          fontWeight: 600,
+          margin: 0,
+        }}>
           {label}
-        </h1>
+        </h2>
+        
         {tools && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
             {tools}
           </div>
         )}
       </div>
 
       {/* Content */}
-      <div style={{ 
-        flex: 1, 
-        overflow: 'auto',
-        paddingBottom: '80px', // Space for footer
-      }}>
-        {children}
-      </div>
+      {children}
     </div>
   );
 }

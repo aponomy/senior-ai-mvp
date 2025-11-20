@@ -3,8 +3,8 @@ import Footer from '../components/Footer';
 import PageContainer from '../components/PageContainer';
 import Timeline from '../components/Timeline';
 import { useDashboard } from '../context/DashboardContext';
-import { generateMockConversations } from '../data/conversationHelpers';
 import type { Conversation } from '../data/conversationHelpers';
+import { generateMockConversations } from '../data/conversationHelpers';
 
 export default function Functions() {
   const { isTimelineActive, toggleTimeline } = useDashboard();
@@ -24,7 +24,6 @@ export default function Functions() {
       >
       <div
         style={{
-          padding: '40px',
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
           gap: '16px',

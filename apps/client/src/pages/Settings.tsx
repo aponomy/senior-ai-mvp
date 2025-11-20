@@ -1,21 +1,25 @@
+import Footer from '../components/Footer';
+
 interface SettingsProps {
   onClose?: () => void;
 }
 
 export default function Settings({ onClose }: SettingsProps) {
   return (
-    <div
-      data-name="settings"
-      style={{
-        width: '100%',
-        height: '100%',
-        background: 'rgba(10, 11, 15, 0.95)',
-        backdropFilter: 'blur(20px)',
-        overflow: 'auto',
-        padding: '40px',
-        position: 'relative',
-      }}
-    >
+    <>
+      <div
+        data-name="settings"
+        style={{
+          width: '100%',
+          height: 'calc(100vh - 80px)', // Full height minus footer
+          background: 'rgba(10, 11, 15, 0.95)',
+          backdropFilter: 'blur(20px)',
+          overflow: 'auto',
+          padding: '40px',
+          paddingBottom: '100px', // Extra padding at bottom
+          position: 'relative',
+        }}
+      >
       {/* Close button top right */}
       {onClose && (
         <button
@@ -80,5 +84,7 @@ export default function Settings({ onClose }: SettingsProps) {
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

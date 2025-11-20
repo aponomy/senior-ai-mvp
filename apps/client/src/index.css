@@ -57,6 +57,7 @@ html, body {
   height: 100vh;
   width: 100vw;
   position: fixed;
+  background: rgba(10, 11, 15, 0.98);
 }
 
 #root {

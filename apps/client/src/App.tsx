@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
+import Timeline from './components/Timeline';
 import ChatWindow from './components/objects/ChatWindow';
-import TopicCluster from './components/objects/ClusterCard';
-import Functions from './components/objects/Functions';
 import LargeButtons from './components/objects/LargeButtons';
 import SearchField from './components/objects/SearchField';
-import Settings from './components/objects/Settings';
-import Timeline from './components/objects/Timeline';
 import Welcome from './components/objects/Welcome';
 import { DashboardProvider, useDashboard } from './context/DashboardContext';
 import type { Conversation } from './data/conversationHelpers';
@@ -14,6 +12,9 @@ import {
     generateMockConversations,
     getTimeBuckets,
 } from './data/conversationHelpers';
+import Functions from './pages/Functions';
+import Settings from './pages/Settings';
+import Topics from './pages/Topics';
 
 function DashboardContent() {
   const { activeObjects, layouts, showObject, hideObject } = useDashboard();
@@ -137,7 +138,7 @@ function DashboardContent() {
               />
             )}
             {layout.id === 'clusterCard' && (
-              <TopicCluster />
+              <Topics />
             )}
             {layout.id === 'functions' && (
               <Functions />
@@ -149,37 +150,6 @@ function DashboardContent() {
         );
       })}
 
-      {/* Settings overlay - slides in from bottom */}
-      {activeObjects.some(obj => obj.id === 'settings') && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 'calc(100vh - 80px)',
-            zIndex: 2000,
-            animation: 'slideInFromBottom 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
-          }}
-        >
-          <Settings onClose={() => hideObject('settings')} />
-        </div>
-      )}
-      
-      {/* Keyframes for settings slide-in animation */}
-      <style>
-        {`
-          @keyframes slideInFromBottom {
-            from {
-              transform: translateY(100%);
-            }
-            to {
-              transform: translateY(0);
-            }
-          }
-        `}
-      </style>
-
       <Footer />
     </div>
   );
@@ -187,9 +157,16 @@ function DashboardContent() {
 
 function App() {
   return (
-    <DashboardProvider>
-      <DashboardContent />
-    </DashboardProvider>
+    <BrowserRouter>
+      <DashboardProvider>
+        <Routes>
+          <Route path="/" element={<DashboardContent />} />
+          <Route path="/topics" element={<Topics />} />
+          <Route path="/functions" element={<Functions />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </DashboardProvider>
+    </BrowserRouter>
   );
 }
 

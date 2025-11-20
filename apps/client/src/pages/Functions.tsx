@@ -1,10 +1,27 @@
-import PageContainer from '../PageContainer';
+import { useState } from 'react';
+import Footer from '../components/Footer';
+import PageContainer from '../components/PageContainer';
+import Timeline from '../components/Timeline';
+import { useDashboard } from '../context/DashboardContext';
+import { generateMockConversations } from '../data/conversationHelpers';
+import type { Conversation } from '../data/conversationHelpers';
 
 export default function Functions() {
+  const { isTimelineActive, toggleTimeline } = useDashboard();
+  
+  // Timeline state
+  const [conversations] = useState<Conversation[]>(generateMockConversations());
+  const [zoom, setZoom] = useState(1);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
+  const handleZoomIn = () => setZoom(prev => Math.min(prev * 1.5, 4));
+  const handleZoomOut = () => setZoom(prev => Math.max(prev / 1.5, 0.25));
+
   return (
-    <PageContainer
-      label="Funktioner"
-    >
+    <>
+      <PageContainer
+        label="Funktioner"
+      >
       <div
         style={{
           padding: '40px',
@@ -464,5 +481,33 @@ export default function Functions() {
         </button>
       </div>
     </PageContainer>
+    
+    {/* Timeline fixed above footer */}
+    {isTimelineActive && (
+      <div style={{ 
+        position: 'fixed',
+        bottom: '80px', // Above footer
+        left: 0,
+        right: 0,
+        height: '160px',
+        zIndex: 1000,
+        background: 'rgba(10, 11, 15, 0.98)',
+        backdropFilter: 'blur(20px)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+      }}>
+        <Timeline
+          conversations={conversations}
+          zoom={zoom}
+          onZoomIn={handleZoomIn}
+          onZoomOut={handleZoomOut}
+          selectedDate={selectedDate}
+          onDateSelect={setSelectedDate}
+          onClose={() => toggleTimeline()}
+        />
+      </div>
+    )}
+    
+    <Footer />
+    </>
   );
 }

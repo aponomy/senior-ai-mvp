@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useDashboard } from '../../context/DashboardContext';
-import topicsData from '../../data/topics.json';
-import DynamicCard from '../cards/DynamicCard';
+import DynamicCard from '../components/cards/DynamicCard';
+import Footer from '../components/Footer';
+import Timeline from '../components/Timeline';
+import { useDashboard } from '../context/DashboardContext';
+import topicsData from '../data/topics.json';
+import { generateMockConversations } from '../data/conversationHelpers';
+import type { Conversation } from '../data/conversationHelpers';
 
 type Topic = {
   id: string;
@@ -84,15 +88,21 @@ interface TopicClusterProps {
   onClose?: () => void;
 }
 
-export default function TopicCluster({ onClose }: TopicClusterProps) {
+export default function Topics({ onClose }: TopicClusterProps) {
   const topics = topicsData.topics as Topic[];
-  const { activeObjects, toggleObject } = useDashboard();
+  const { isTimelineActive, toggleTimeline } = useDashboard();
   const [viewMode, setViewMode] = useState<'clustered' | 'skyline'>('clustered');
   const [positionedTopics, setPositionedTopics] = useState<PositionedTopic[]>([]);
   const [columns, setColumns] = useState(60);
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Timeline state
+  const [conversations] = useState<Conversation[]>(generateMockConversations());
+  const [zoom, setZoom] = useState(1);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  const isTimelineActive = activeObjects.some(obj => obj.id === 'timeline');
+  const handleZoomIn = () => setZoom(prev => Math.min(prev * 1.5, 4));
+  const handleZoomOut = () => setZoom(prev => Math.max(prev / 1.5, 0.25));
 
   useEffect(() => {
     if (viewMode === 'skyline') {
@@ -110,16 +120,19 @@ export default function TopicCluster({ onClose }: TopicClusterProps) {
   }, [viewMode, topics]);
 
   return (
-    <div 
-      data-name="cluster-card"
-      style={{
-      width: '100%',
-      height: '100%',
-      background: 'rgba(10, 11, 15, 0.95)',
-      backdropFilter: 'blur(20px)',
-      overflow: 'auto',
-      padding: '20px',
-    }}>
+    <>
+      <div 
+        data-name="cluster-card"
+        style={{
+          width: '100%',
+          height: 'calc(100vh - 80px)', // Full height minus footer
+          background: 'rgba(10, 11, 15, 0.98)',
+          backdropFilter: 'blur(20px)',
+          overflow: 'auto',
+          padding: '20px',
+          paddingBottom: isTimelineActive ? '180px' : '20px', // Extra padding when timeline is visible
+        }}
+      >
       {/* Header with toggle */}
       <div style={{
         display: 'flex',
@@ -129,9 +142,13 @@ export default function TopicCluster({ onClose }: TopicClusterProps) {
         position: 'sticky',
         top: 0,
         zIndex: 10,
-        background: 'rgba(10, 11, 15, 0.95)',
+        background: 'rgba(10, 11, 15, 0.98)',
         backdropFilter: 'blur(20px)',
         padding: '12px 0',
+        marginLeft: '-20px',
+        marginRight: '-20px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
       }}>
         <h2 style={{
           color: 'white',
@@ -291,7 +308,7 @@ export default function TopicCluster({ onClose }: TopicClusterProps) {
 
           {/* Timeline Toggle Button */}
           <button
-            onClick={() => toggleObject('timeline')}
+            onClick={() => toggleTimeline()}
             style={{
               width: '40px',
               height: '40px',
@@ -516,5 +533,33 @@ export default function TopicCluster({ onClose }: TopicClusterProps) {
         </div>
       )}
     </div>
+    
+    {/* Timeline fixed above footer */}
+    {isTimelineActive && (
+      <div style={{ 
+        position: 'fixed',
+        bottom: '80px', // Above footer
+        left: 0,
+        right: 0,
+        height: '160px',
+        zIndex: 1000,
+        background: 'rgba(10, 11, 15, 0.98)',
+        backdropFilter: 'blur(20px)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+      }}>
+        <Timeline
+          conversations={conversations}
+          zoom={zoom}
+          onZoomIn={handleZoomIn}
+          onZoomOut={handleZoomOut}
+          selectedDate={selectedDate}
+          onDateSelect={setSelectedDate}
+          onClose={() => toggleTimeline()}
+        />
+      </div>
+    )}
+    
+    <Footer />
+    </>
   );
 }

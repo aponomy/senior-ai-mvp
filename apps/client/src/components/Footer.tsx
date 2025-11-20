@@ -1,17 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDashboard } from '../context/DashboardContext';
 
 export default function Footer() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { activeObjects, toggleObject, hideObject } = useDashboard();
   const [isListening, setIsListening] = useState(false);
   const [message, setMessage] = useState('');
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const isChatActive = activeObjects.some(obj => obj.id === 'chatWindow');
-  const isClusterActive = activeObjects.some(obj => obj.id === 'clusterCard');
-  const isSettingsActive = activeObjects.some(obj => obj.id === 'settings');
-  const isFunctionsActive = activeObjects.some(obj => obj.id === 'functions');
+  const isClusterActive = location.pathname === '/topics';
+  const isSettingsActive = location.pathname === '/settings';
+  const isFunctionsActive = location.pathname === '/functions';
 
   // Helper to handle button clicks - closes settings if open
   const handleButtonClick = (objectId: string) => {
@@ -69,6 +73,16 @@ export default function Footer() {
     };
   }, [showMenu]);
 
+  // Auto-focus input when chat becomes active
+  useEffect(() => {
+    if (isChatActive && inputRef.current) {
+      // Small delay to ensure the animation has started
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }, [isChatActive]);
+
   return (
     <>
       {/* Text Input Field - shown when chat window is active and positioned above footer */}
@@ -98,6 +112,7 @@ export default function Footer() {
             }}
           >
             <input
+              ref={inputRef}
               type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -194,7 +209,7 @@ export default function Footer() {
           <button
             onClick={() => {
               setShowMenu(false);
-              handleButtonClick('settings');
+              navigate('/settings');
             }}
             style={{
               width: '100%',
@@ -349,7 +364,7 @@ export default function Footer() {
         left: 0,
         right: 0,
         height: '80px',
-        background: 'rgba(10, 11, 15, 0.8)',
+        background: 'rgba(10, 11, 15, 0.95)',
         backdropFilter: 'blur(20px)',
         borderTop: '1px solid rgba(255, 255, 255, 0.1)',
         display: 'flex',
@@ -405,7 +420,7 @@ export default function Footer() {
 
       {/* Topics/Cluster Button */}
       <button
-        onClick={() => handleButtonClick('clusterCard')}
+        onClick={() => navigate('/topics')}
         style={{
           width: '48px',
           height: '48px',
@@ -460,7 +475,7 @@ export default function Footer() {
 
       {/* Functions Button */}
       <button
-        onClick={() => handleButtonClick('functions')}
+        onClick={() => navigate('/functions')}
         style={{
           width: '48px',
           height: '48px',
@@ -607,7 +622,7 @@ export default function Footer() {
 
       {/* Settings Button */}
       <button
-        onClick={() => handleButtonClick('settings')}
+        onClick={() => navigate('/settings')}
         style={{
           width: '48px',
           height: '48px',

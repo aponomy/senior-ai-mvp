@@ -10,6 +10,9 @@ interface DashboardContextType {
   showObject: (objectId: string) => void;
   hideObject: (objectId: string) => void;
   toggleObject: (objectId: string) => void;
+  isTimelineActive: boolean;
+  setIsTimelineActive: (active: boolean) => void;
+  toggleTimeline: () => void;
 }
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
@@ -18,6 +21,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [activeObjects, setActiveObjects] = useState<ActiveObject[]>([
     { id: 'welcome', state: 'full' }, // Start with welcome screen
   ]);
+  
+  const [isTimelineActive, setIsTimelineActive] = useState(false);
   
   const [viewport, setViewport] = useState({
     width: window.innerWidth,
@@ -65,6 +70,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const toggleTimeline = () => {
+    setIsTimelineActive(prev => !prev);
+  };
+
   return (
     <DashboardContext.Provider
       value={{
@@ -74,6 +83,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         showObject,
         hideObject,
         toggleObject,
+        isTimelineActive,
+        setIsTimelineActive,
+        toggleTimeline,
       }}
     >
       {children}

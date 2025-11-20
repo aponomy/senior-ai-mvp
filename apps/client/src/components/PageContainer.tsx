@@ -11,14 +11,13 @@ export default function PageContainer({ label, tools, children }: PageContainerP
     <div
       data-name="page-container"
       style={{
-        minHeight: '100vh',
+        height: '100vh',
         background: 'linear-gradient(180deg, #0a0b0f 0%, #1a1b2f 100%)',
         display: 'flex',
         flexDirection: 'column',
         color: 'white',
         position: 'relative',
         overflow: 'hidden',
-        paddingBottom: '80px', // Space for footer
       }}
     >
       {/* Header */}
@@ -45,7 +44,11 @@ export default function PageContainer({ label, tools, children }: PageContainerP
       </div>
 
       {/* Content */}
-      <div style={{ flex: 1 }}>
+      <div style={{ 
+        flex: 1, 
+        overflow: 'auto',
+        paddingBottom: '80px', // Space for footer
+      }}>
         {children}
       </div>
     </div>

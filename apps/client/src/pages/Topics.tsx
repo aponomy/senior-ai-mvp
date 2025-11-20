@@ -89,9 +89,10 @@ function packTopicsWithSkyline(topics: Topic[], containerWidth: number): Positio
 interface TopicClusterProps {
   onClose?: () => void;
   timelineRef: React.RefObject<HTMLDivElement | null>;
+  conversationWidth?: string;
 }
 
-export default function Topics({ onClose, timelineRef }: TopicClusterProps) {
+export default function Topics({ onClose, timelineRef, conversationWidth }: TopicClusterProps) {
   const topics = topicsData.topics as Topic[];
   const { isTimelineActive, toggleTimeline } = useDashboard();
   const [viewMode, setViewMode] = useState<'clustered' | 'skyline'>('clustered');
@@ -503,13 +504,14 @@ export default function Topics({ onClose, timelineRef }: TopicClusterProps) {
       )}
       </PageContainer>
     
-    {/* Timeline portal - renders as sibling to Footer */}
+    
+    {/* Timeline portal - renders within dashboard container, respects its width */}
     {isTimelineActive && timelineRef.current && createPortal(
       <div style={{ 
         position: 'fixed',
         bottom: '80px', // Above footer
         left: 0,
-        right: 0,
+        right: conversationWidth || 0,
         height: '160px',
         zIndex: 1000,
         background: 'rgba(10, 11, 15, 0.98)',

@@ -2,15 +2,18 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDashboard } from '../context/DashboardContext';
 
-export default function Footer() {
+interface FooterProps {
+  onNavigate?: (path: string) => void;
+}
+
+export default function Footer({ onNavigate }: FooterProps = {}) {
   const navigate = useNavigate();
   const location = useLocation();
   const { activeObjects, toggleObject, hideObject } = useDashboard();
   const [isListening, setIsListening] = useState(false);
-  const [message, setMessage] = useState('');
+  const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const isChatActive = activeObjects.some(obj => obj.id === 'chatWindow');
   const isClusterActive = location.pathname === '/topics';
@@ -41,19 +44,9 @@ export default function Footer() {
     console.log(isListening ? 'Stopped listening' : 'Started listening');
   };
 
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      console.log('Send message:', message);
-      // TODO: Send message to backend
-      setMessage('');
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
+  const toggleVoice = () => {
+    setIsVoiceEnabled(prev => !prev);
+    console.log(isVoiceEnabled ? 'Voice output disabled' : 'Voice output enabled');
   };
 
   // Close menu when clicking outside
@@ -73,128 +66,31 @@ export default function Footer() {
     };
   }, [showMenu]);
 
-  // Auto-focus input when chat becomes active
-  useEffect(() => {
-    if (isChatActive && inputRef.current) {
-      // Small delay to ensure the animation has started
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
-    }
-  }, [isChatActive]);
-
   return (
-    <>
-      {/* Text Input Field - shown when chat window is active and positioned above footer */}
-      {isChatActive && (
-        <div
-          style={{
-            position: 'fixed',
-            bottom: '80px', // Align to footer top
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '500px',
-            maxWidth: 'calc(100vw - 80px)',
-            zIndex: 2100,
-            animation: 'slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              gap: '8px',
-              background: 'rgba(26, 27, 47, 0.95)',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '12px',
-              padding: '8px',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
-            }}
-          >
-            <input
-              ref={inputRef}
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Skriv ditt meddelande..."
-              style={{
-                flex: 1,
-                padding: '12px 16px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '8px',
-                color: 'white',
-                fontSize: '14px',
-                outline: 'none',
-                transition: 'all 0.2s ease',
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                e.currentTarget.style.borderColor = 'rgba(96, 165, 250, 0.5)';
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-              }}
-            />
-            <button
-              onClick={handleSendMessage}
-              disabled={!message.trim()}
-              style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '50%',
-                background: message.trim()
-                  ? 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)'
-                  : 'rgba(255, 255, 255, 0.1)',
-                border: 'none',
-                color: 'white',
-                cursor: message.trim() ? 'pointer' : 'not-allowed',
-                transition: 'all 0.2s ease',
-                opacity: message.trim() ? 1 : 0.5,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: message.trim() ? '0 4px 12px rgba(96, 165, 250, 0.3)' : 'none',
-              }}
-              onMouseEnter={(e) => {
-                if (message.trim()) {
-                  e.currentTarget.style.transform = 'scale(1.1)';
-                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(96, 165, 250, 0.5)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = message.trim() ? '0 4px 12px rgba(96, 165, 250, 0.3)' : 'none';
-              }}
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="22" y1="2" x2="11" y2="13" />
-                <polygon points="22 2 15 22 11 13 2 9 22 2" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      )}
-
+    <footer
+      data-name="footer"
+      style={{
+        height: '80px',
+        background: 'rgba(10, 11, 15, 0.95)',
+        backdropFilter: 'blur(20px)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 2100,
+        gap: '24px',
+        position: 'relative',
+      }}
+    >
       {/* Three-dot menu dropdown */}
       {showMenu && (
         <div
           ref={menuRef}
           style={{
-            position: 'fixed',
-            bottom: '80px', // Align to top of footer (same as footer height)
+            position: 'absolute',
+            bottom: '100%',
             left: '20px',
+            marginBottom: '8px',
             background: 'rgba(26, 27, 47, 0.98)',
             backdropFilter: 'blur(20px)',
             border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -209,7 +105,11 @@ export default function Footer() {
           <button
             onClick={() => {
               setShowMenu(false);
-              navigate('/settings');
+              if (onNavigate) {
+                onNavigate('/settings');
+              } else {
+                navigate('/settings');
+              }
             }}
             style={{
               width: '100%',
@@ -356,24 +256,6 @@ export default function Footer() {
         </div>
       )}
 
-    <footer
-      data-name="footer"
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: '80px',
-        background: 'rgba(10, 11, 15, 0.95)',
-        backdropFilter: 'blur(20px)',
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 2100,
-        gap: '24px',
-      }}
-    >
       {/* Three-dot Menu Button - Left Side */}
       <button
         onClick={() => setShowMenu(prev => !prev)}
@@ -420,7 +302,13 @@ export default function Footer() {
 
       {/* Topics/Cluster Button */}
       <button
-        onClick={() => navigate('/topics')}
+        onClick={() => {
+          if (onNavigate) {
+            onNavigate('/topics');
+          } else {
+            navigate('/topics');
+          }
+        }}
         style={{
           width: '48px',
           height: '48px',
@@ -475,7 +363,13 @@ export default function Footer() {
 
       {/* Functions Button */}
       <button
-        onClick={() => navigate('/functions')}
+        onClick={() => {
+          if (onNavigate) {
+            onNavigate('/functions');
+          } else {
+            navigate('/functions');
+          }
+        }}
         style={{
           width: '48px',
           height: '48px',
@@ -620,56 +514,74 @@ export default function Footer() {
         </svg>
       </button>
 
-      {/* Settings Button */}
+      {/* Voice Toggle Button */}
       <button
-        onClick={() => navigate('/settings')}
+        onClick={toggleVoice}
         style={{
           width: '48px',
           height: '48px',
           borderRadius: '50%',
-          background: isSettingsActive 
-            ? 'rgba(251, 191, 36, 0.4)' 
-            : 'rgba(251, 191, 36, 0.15)',
-          border: isSettingsActive 
-            ? '2px solid rgba(251, 191, 36, 0.8)' 
-            : '2px solid rgba(251, 191, 36, 0.3)',
+          background: isVoiceEnabled 
+            ? 'rgba(34, 197, 94, 0.4)' 
+            : 'rgba(127, 29, 29, 0.4)',
+          border: isVoiceEnabled 
+            ? '2px solid rgba(34, 197, 94, 0.8)' 
+            : '2px solid rgba(127, 29, 29, 0.8)',
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          boxShadow: isSettingsActive 
-            ? '0 0 20px rgba(251, 191, 36, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3)' 
+          transform: isVoiceEnabled ? 'scale(1.1)' : 'scale(1)',
+          boxShadow: isVoiceEnabled 
+            ? '0 0 20px rgba(34, 197, 94, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3)' 
             : '0 4px 12px rgba(0, 0, 0, 0.3)',
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.1)';
-          if (!isSettingsActive) {
-            e.currentTarget.style.background = 'rgba(251, 191, 36, 0.25)';
-            e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.5)';
+          if (isVoiceEnabled) {
+            e.currentTarget.style.background = 'rgba(34, 197, 94, 0.5)';
+            e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.9)';
+          } else {
+            e.currentTarget.style.background = 'rgba(127, 29, 29, 0.5)';
+            e.currentTarget.style.borderColor = 'rgba(127, 29, 29, 0.9)';
           }
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
-          if (!isSettingsActive) {
-            e.currentTarget.style.background = 'rgba(251, 191, 36, 0.15)';
-            e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.3)';
+          if (isVoiceEnabled) {
+            e.currentTarget.style.background = 'rgba(34, 197, 94, 0.4)';
+            e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.8)';
+          } else {
+            e.currentTarget.style.background = 'rgba(127, 29, 29, 0.4)';
+            e.currentTarget.style.borderColor = 'rgba(127, 29, 29, 0.8)';
           }
         }}
-        aria-label="Toggle settings"
+        aria-label={isVoiceEnabled ? 'Disable voice output' : 'Enable voice output'}
       >
         <svg
           width="24"
           height="24"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#fbbf24"
+          stroke={isVoiceEnabled ? '#22c55e' : '#7f1d1d'}
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <circle cx="12" cy="12" r="3" />
-          <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m-2 2l-4.2 4.2M1 12h6m6 0h6m-13.2 5.2l4.2-4.2m2-2l4.2-4.2" />
+          {isVoiceEnabled ? (
+            <>
+              {/* Volume/Speaker icon when enabled */}
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+            </>
+          ) : (
+            <>
+              {/* Muted volume icon when disabled */}
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <line x1="23" y1="9" x2="17" y2="15" />
+              <line x1="17" y1="9" x2="23" y2="15" />
+            </>
+          )}
         </svg>
       </button>
 
@@ -691,20 +603,21 @@ export default function Footer() {
           alignItems: 'center',
           justifyContent: 'center',
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          transform: isChatActive ? 'scale(1.1)' : 'scale(1)',
           boxShadow: isChatActive 
             ? '0 0 20px rgba(255, 78, 157, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3)' 
             : '0 4px 12px rgba(0, 0, 0, 0.3)',
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.1)';
           if (!isChatActive) {
+            e.currentTarget.style.transform = 'scale(1.1)';
             e.currentTarget.style.background = 'rgba(255, 78, 157, 0.25)';
             e.currentTarget.style.borderColor = 'rgba(255, 78, 157, 0.5)';
           }
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
           if (!isChatActive) {
+            e.currentTarget.style.transform = 'scale(1)';
             e.currentTarget.style.background = 'rgba(255, 78, 157, 0.15)';
             e.currentTarget.style.borderColor = 'rgba(255, 78, 157, 0.3)';
           }
@@ -759,6 +672,5 @@ export default function Footer() {
         `}
       </style>
     </footer>
-    </>
   );
 }

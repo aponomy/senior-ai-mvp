@@ -5,6 +5,7 @@ interface WelcomeProps {
 export default function Welcome({ onStart }: WelcomeProps) {
   return (
     <div
+      data-name="welcome"
       style={{
         height: '100%',
         display: 'flex',

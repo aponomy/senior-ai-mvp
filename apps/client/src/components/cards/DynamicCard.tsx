@@ -341,6 +341,7 @@ export default function DynamicCard({
   return (
     <div
       ref={ref}
+      data-name="dynamic-card"
       className={`dynamic-card glass ${rippleEnabled ? 'ripple-btn' : ''} ${disabled ? 'disabled' : ''} ${className}`}
       style={containerStyle}
       onMouseDown={rippleEnabled ? ripple : undefined}

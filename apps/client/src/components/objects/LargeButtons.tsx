@@ -7,6 +7,7 @@ interface LargeButtonsProps {
 export default function LargeButtons({ onButtonClick }: LargeButtonsProps) {
   return (
     <div
+      data-name="large-buttons"
       style={{
         height: '100%',
         display: 'flex',

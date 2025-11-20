@@ -96,7 +96,7 @@ export default function TopicCluster({ onClose }: TopicClusterProps) {
 
   useEffect(() => {
     if (viewMode === 'skyline') {
-      const updateLayout = () => {
+    const updateLayout = () => {
         const containerWidth = window.innerWidth - 40; // Full width minus padding
         const cols = Math.floor(containerWidth / 20);
         setColumns(cols);
@@ -110,7 +110,9 @@ export default function TopicCluster({ onClose }: TopicClusterProps) {
   }, [viewMode, topics]);
 
   return (
-    <div style={{
+    <div 
+      data-name="cluster-card"
+      style={{
       width: '100%',
       height: '100%',
       background: 'rgba(10, 11, 15, 0.95)',

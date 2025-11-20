@@ -92,6 +92,7 @@ export default function NewConversation() {
 
   return (
     <div
+      data-name="new-conversation"
       style={{
         minHeight: '100vh',
         background: 'linear-gradient(180deg, #0a0b0f 0%, #1a1b2f 100%)',

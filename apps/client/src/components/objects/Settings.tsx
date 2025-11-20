@@ -5,6 +5,7 @@ interface SettingsProps {
 export default function Settings({ onClose }: SettingsProps) {
   return (
     <div
+      data-name="settings"
       style={{
         width: '100%',
         height: '100%',

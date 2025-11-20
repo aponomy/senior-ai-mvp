@@ -71,15 +71,15 @@ export default function Footer() {
 
   return (
     <>
-      {/* Text Input Field - shown when not listening and positioned above footer */}
-      {!isListening && (
+      {/* Text Input Field - shown when chat window is active and positioned above footer */}
+      {isChatActive && (
         <div
           style={{
             position: 'fixed',
             bottom: '80px', // Align to footer top
             left: '50%',
             transform: 'translateX(-50%)',
-            width: '600px',
+            width: '500px',
             maxWidth: 'calc(100vw - 80px)',
             zIndex: 2100,
             animation: 'slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -342,6 +342,7 @@ export default function Footer() {
       )}
 
     <footer
+      data-name="footer"
       style={{
         position: 'fixed',
         bottom: 0,

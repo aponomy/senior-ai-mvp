@@ -17,7 +17,9 @@ export default function SearchField({
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   return (
-    <div style={{
+    <div 
+      data-name="search-field"
+      style={{
       padding: '20px 40px',
       borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
       backdropFilter: 'blur(10px)',

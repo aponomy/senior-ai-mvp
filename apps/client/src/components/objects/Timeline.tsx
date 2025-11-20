@@ -58,7 +58,9 @@ export default function Timeline({
   }, []);
 
   return (
-    <div style={{
+    <div 
+      data-name="timeline"
+      style={{
       background: 'rgba(10, 11, 15, 0.9)',
       backdropFilter: 'blur(20px)',
       borderTop: '1px solid rgba(255, 255, 255, 0.1)',

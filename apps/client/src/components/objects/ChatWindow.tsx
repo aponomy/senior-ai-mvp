@@ -94,6 +94,7 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
 
   return (
     <div
+      data-name="chat-window"
       className="chat-container glass"
       style={{
         height: '100%',

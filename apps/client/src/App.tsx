@@ -75,6 +75,7 @@ function DashboardContent() {
 
   return (
     <div
+      data-name="dashboard-content"
       style={{
         minHeight: '100vh',
         background: 'linear-gradient(180deg, #0a0b0f 0%, #1a1b2f 100%)',
@@ -139,7 +140,7 @@ function DashboardContent() {
               <TopicCluster />
             )}
             {layout.id === 'functions' && (
-              <Functions onClose={() => hideObject('functions')} />
+              <Functions />
             )}
             {layout.id === 'welcome' && (
               <Welcome onStart={handleWelcomeStart} />

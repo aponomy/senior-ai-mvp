@@ -18,7 +18,7 @@ function AppContent() {
   const isTopicsRoute = location.pathname === '/topics';
   const isChatActive = activeObjects.some(obj => obj.id === 'chatWindow');
   
-  const [showConversation, setShowConversation] = useState<ConversationSize>(null);
+  const [showConversation, setShowConversation] = useState<ConversationSize>('large'); // null
 
   // When navigation happens and conversation is large, resize to medium
   const handleNavigation = (path: string) => {

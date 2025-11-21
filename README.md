@@ -1,6 +1,10 @@
 # senior-ai-mvp
 
-A modern full-stack application with an object-based dashboard architecture, React frontend, and Cloudflare Pages backend.
+An AI assistant application designed specifically for elderly users, featuring an object-based dashboard architecture with React frontend and Cloudflare Pages backend.
+
+## Overview
+
+This application reimagines AI conversation interfaces to be more accessible and intuitive for elderly users. Instead of traditional endless chat scrolls, it features innovative conversation summarization, progressive information disclosure, and a clear visual hierarchy that helps users maintain context and navigate their AI interactions with confidence.
 
 ## Architecture
 

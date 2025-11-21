@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { ProgressiveConversationView } from '../components/conversation/ProgressiveConversationView';
+import { mockBeats, mockMessages } from '../data/mockConversation';
 
 interface ConversationProps {
   size: 'small' | 'medium' | 'large';
@@ -7,9 +9,9 @@ interface ConversationProps {
 }
 
 export default function Conversation({ size, onClose, onResize }: ConversationProps) {
-  const [messages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([
-    { role: 'assistant', content: 'Hello! How can I help you today?' },
-  ]);
+  // Use mock data for now - will be replaced with real conversation state later
+  const [messages] = useState(mockMessages);
+  const [beats] = useState(mockBeats);
 
   return (
     <div
@@ -170,40 +172,15 @@ export default function Conversation({ size, onClose, onResize }: ConversationPr
         style={{
           flex: 1,
           overflowY: 'auto',
-          padding: '20px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
+          position: 'relative',
         }}
       >
-        {messages.map((message, index) => (
-          <div
-            key={index}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-              alignSelf: message.role === 'user' ? 'flex-end' : 'flex-start',
-              maxWidth: size === 'small' ? '100%' : '70%',
-            }}
-          >
-            <div
-              style={{
-                padding: '12px 16px',
-                borderRadius: '12px',
-                background:
-                  message.role === 'user'
-                    ? 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)'
-                    : 'rgba(255, 255, 255, 0.05)',
-                color: 'white',
-                fontSize: '14px',
-                lineHeight: '1.5',
-              }}
-            >
-              {message.content}
-            </div>
-          </div>
-        ))}
+        <ProgressiveConversationView
+          messages={messages}
+          beats={beats}
+          recentThreshold={5}
+          nearRecentThreshold={10}
+        />
       </div>
     </div>
   );

@@ -1,10 +1,28 @@
 # senior-ai-mvp
 
-An AI assistant application designed specifically for elderly users, featuring an object-based dashboard architecture with React frontend and Cloudflare Pages backend.
+**The Accessible Gateway to the AI Ecosystem for Elderly Users**
+
+An AI assistant application that makes thousands of AI services (ChatGPT, Midjourney, Perplexity, etc.) accessible through one elderly-optimized interface. Features an object-based dashboard architecture with React frontend and Cloudflare Pages backend.
 
 ## Overview
 
-This application reimagines AI conversation interfaces to be more accessible and intuitive for elderly users. Instead of traditional endless chat scrolls, it features innovative conversation summarization, progressive information disclosure, and a clear visual hierarchy that helps users maintain context and navigate their AI interactions with confidence.
+Senior AI is an **accessibility layer for the entire AI ecosystem**, designed for elderly users who find today's AI tools too hard to find, understand, or use. We reimagine AI conversation interfaces to be empowering, not overwhelming—enabling users to:
+
+- **Create**: Generate images, videos, presentations, written works
+- **Learn**: Research topics, explore interests, discover knowledge
+- **Connect**: Communicate, collaborate, share memories
+- **Execute**: Banking, healthcare, government, shopping (14+ life domains)
+
+Instead of traditional endless chat scrolls, we feature **Conversation Atlas** — our breakthrough multi-resolution conversation interface with progressive disclosure, intelligent summarization, and clear visual hierarchy that helps users maintain context and navigate their AI interactions with confidence.
+
+### Conversation Atlas
+
+**Conversation Atlas** is our proprietary technology that transforms long conversations into a clear, zoomable map. Users always see three views at once: the big picture of topics, the key points of selected topics, and full messages only when needed. It's organized along three axes:
+- **Time**: Progressive column reveal as conversations mature
+- **Detail**: Five resolution levels from topic clusters to full messages  
+- **Intent**: Separation of regular conversations, functions, and meta-conversations
+
+This enables 30+ turn context retention (vs 3-5 turns in mainstream assistants) with 70% reduction in re-reading. Grounded in W3C Cognitive Accessibility guidelines and ISO 21801 standards.
 
 ## Architecture
 

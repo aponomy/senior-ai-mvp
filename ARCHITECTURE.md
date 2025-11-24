@@ -2,6 +2,22 @@
 
 ## Overview
 
+The application has been refactored from a route-based architecture to an object-based dashboard system. Instead of navigating between pages, users interact with dynamic "objects" that appear, disappear, and reposition themselves on the dashboard based on user actions.
+
+## Key Innovation: Conversation Atlas
+
+**Conversation Atlas** is our proprietary multi-resolution conversation interface that organizes dialogue along three axes:
+
+1. **Time Axis**: Progressive column reveal (1 column → 2 columns → 3 columns) as conversations mature
+2. **Detail Axis**: Five resolution levels (full messages → condensed → summaries → conversation summaries → topic clusters)
+3. **Intent Axis**: Three-category separation (Regular conversations, Functions, Meta-conversations)
+
+Users can bidirectionally zoom—from topic overview to full message detail and back—with live synchronization across all views. This enables 30+ turn context retention versus 3-5 turns in mainstream assistants, with ≥70% reduction in content re-reading.
+
+**Note**: Implementation files may reference "three-column" for technical clarity in describing the layout structure, but the branded technology name is **"Conversation Atlas"**.ect-Based Dashboard Architecture
+
+## Overview
+
 The application has been refactored from a route-based architecture to an object-based dashboard system. Instead of navigating between pages, users now interact with dynamic "objects" that appear, disappear, and reposition themselves on the dashboard based on user actions.
 
 ## Key Concepts

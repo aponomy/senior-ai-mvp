@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ProgressiveConversationView } from '../components/conversation/ProgressiveConversationView';
-import { mockBeats, mockMessages } from '../data/mockConversation';
+import ConversationNavigator from '../components/conversation/ConversationNavigator';
+import { mockMessages, mockSummaries } from '../data/mockConversation';
 
 interface ConversationProps {
   size: 'small' | 'medium' | 'large';
@@ -9,9 +9,9 @@ interface ConversationProps {
 }
 
 export default function Conversation({ size, onClose, onResize }: ConversationProps) {
-  // Use mock data for now - will be replaced with real conversation state later
+  // Use mock data for testing Conversation Atlas layout
+  const [summaries] = useState(mockSummaries);
   const [messages] = useState(mockMessages);
-  const [beats] = useState(mockBeats);
 
   return (
     <div
@@ -167,19 +167,16 @@ export default function Conversation({ size, onClose, onResize }: ConversationPr
         </div>
       </div>
 
-      {/* Messages */}
+      {/* Conversation Atlas Navigator */}
       <div
         style={{
           flex: 1,
-          overflowY: 'auto',
-          position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <ProgressiveConversationView
+        <ConversationNavigator
+          summaries={summaries}
           messages={messages}
-          beats={beats}
-          recentThreshold={5}
-          nearRecentThreshold={10}
         />
       </div>
     </div>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Senior AI logo - Voice to Cards">
+  <desc>Round dark badge with white dot leading to three rounded card lines.</desc>
+  <!-- Dark background -->
+  <circle cx="256" cy="256" r="248" fill="#0B1220"></circle>
+  <!-- Voice dot -->
+  <circle cx="180" cy="256" r="16" fill="#FFFFFF"></circle>
+  <!-- Card lines -->
+  <line x1="240" y1="200" x2="392" y2="200" stroke="#FFFFFF" stroke-width="28" stroke-linecap="round"></line>
+  <line x1="260" y1="256" x2="420" y2="256" stroke="#FFFFFF" stroke-width="28" stroke-linecap="round"></line>
+  <line x1="240" y1="312" x2="392" y2="312" stroke="#FFFFFF" stroke-width="28" stroke-linecap="round"></line>
+</svg>

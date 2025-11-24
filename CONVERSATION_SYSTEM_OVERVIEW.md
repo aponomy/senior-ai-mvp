@@ -178,11 +178,12 @@ Path A  Path B
 - Clear, forgiving interactions
 - No technical jargon
 
-### 2. Progressive Disclosure
+### 2. Conversation Atlas: Progressive Disclosure
 - Start simple, reveal complexity gradually
 - User always in control
 - Nothing happens automatically without clear indication
 - Easy to undo or go back
+- Multi-resolution interface: see conversations at five levels of detail simultaneously
 
 ### 3. Context Preservation
 - Never lose information

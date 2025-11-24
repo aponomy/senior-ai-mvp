@@ -1,9 +1,12 @@
+import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import DynamicCard from '../components/cards/DynamicCard';
-import Footer from '../components/Footer';
-import PageContainer from '../components/PageContainer';
-import Timeline from '../components/Timeline';
+import Footer from '../components/layout/Footer';
+import PageContainer from '../components/layout/PageContainer';
+import Timeline from '../components/layout/Timeline';
+import DynamicCard from '../components/ui/custom/DynamicCard';
+import { Input } from '../components/ui/shadcn/input';
+import { ToggleGroup, ToggleGroupItem } from '../components/ui/shadcn/toggle-group';
 import { useDashboard } from '../context/DashboardContext';
 import type { Conversation } from '../data/conversationHelpers';
 import { generateMockConversations } from '../data/conversationHelpers';
@@ -130,150 +133,71 @@ export default function Topics({ onClose, timelineRef, conversationWidth }: Topi
         tools={
           <>
             {/* Search Field */}
-            <div style={{ position: 'relative', marginRight: '12px' }}>
-              <input
+            <div className="relative mr-3">
+              <Input
                 type="text"
                 placeholder="Sök konversation"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={{
-                  width: '200px',
-                  padding: '8px 36px 8px 12px',
-                  borderRadius: '20px',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  color: 'white',
-                  fontSize: '14px',
-                  outline: 'none',
-                  transition: 'all 0.2s',
-                }}
-                onFocus={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-                  e.currentTarget.style.borderColor = 'rgba(167, 139, 250, 0.5)';
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                }}
+                className="w-[200px] pr-9 rounded-full border-white/20 bg-white/5 text-white placeholder:text-white/40 focus-visible:bg-white/10 focus-visible:border-purple-400/50"
+                aria-label="Sök konversationer"
               />
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="rgba(255, 255, 255, 0.4)"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{
-                  position: 'absolute',
-                  right: '12px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  pointerEvents: 'none',
-                }}
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.35-4.35" />
-              </svg>
+              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
             </div>
 
-            {/* View Mode Toggle - Round Buttons */}
-            <button
-              onClick={() => setViewMode('clustered')}
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
-                border: viewMode === 'clustered' 
-                  ? '2px solid rgba(157, 78, 255, 0.8)' 
-                  : '1px solid rgba(255, 255, 255, 0.2)',
-                background: viewMode === 'clustered' 
-                  ? 'rgba(157, 78, 255, 0.3)' 
-                  : 'rgba(255, 255, 255, 0.05)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                if (viewMode !== 'clustered') {
-                  e.currentTarget.style.background = 'rgba(157, 78, 255, 0.15)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (viewMode !== 'clustered') {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                }
-              }}
-              aria-label="Lista view"
+            {/* View Mode Toggle */}
+            <ToggleGroup
+              type="single"
+              value={viewMode}
+              onValueChange={(value) => value && setViewMode(value as 'clustered' | 'skyline')}
+              className="gap-0"
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={viewMode === 'clustered' ? '#9d4eff' : 'rgba(255, 255, 255, 0.6)'}
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+              <ToggleGroupItem
+                value="clustered"
+                aria-label="Lista view"
+                className="w-10 h-10 rounded-full data-[state=on]:bg-purple-500/30 data-[state=on]:border-2 data-[state=on]:border-purple-500/80 border border-white/20 bg-white/5 hover:bg-purple-500/15"
               >
-                <line x1="8" y1="6" x2="21" y2="6" />
-                <line x1="8" y1="12" x2="21" y2="12" />
-                <line x1="8" y1="18" x2="21" y2="18" />
-                <line x1="3" y1="6" x2="3.01" y2="6" />
-                <line x1="3" y1="12" x2="3.01" y2="12" />
-                <line x1="3" y1="18" x2="3.01" y2="18" />
-              </svg>
-            </button>
-            
-            <button
-              onClick={() => setViewMode('skyline')}
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
-                border: viewMode === 'skyline' 
-                  ? '2px solid rgba(157, 78, 255, 0.8)' 
-                  : '1px solid rgba(255, 255, 255, 0.2)',
-                background: viewMode === 'skyline' 
-                  ? 'rgba(157, 78, 255, 0.3)' 
-                  : 'rgba(255, 255, 255, 0.05)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                if (viewMode !== 'skyline') {
-                  e.currentTarget.style.background = 'rgba(157, 78, 255, 0.15)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (viewMode !== 'skyline') {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                }
-              }}
-              aria-label="Skyline view"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={viewMode === 'skyline' ? '#9d4eff' : 'rgba(255, 255, 255, 0.6)'}
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={viewMode === 'clustered' ? '#9d4eff' : 'rgba(255, 255, 255, 0.6)'}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="8" y1="6" x2="21" y2="6" />
+                  <line x1="8" y1="12" x2="21" y2="12" />
+                  <line x1="8" y1="18" x2="21" y2="18" />
+                  <line x1="3" y1="6" x2="3.01" y2="6" />
+                  <line x1="3" y1="12" x2="3.01" y2="12" />
+                  <line x1="3" y1="18" x2="3.01" y2="18" />
+                </svg>
+              </ToggleGroupItem>
+              
+              <ToggleGroupItem
+                value="skyline"
+                aria-label="Skyline view"
+                className="w-10 h-10 rounded-full data-[state=on]:bg-purple-500/30 data-[state=on]:border-2 data-[state=on]:border-purple-500/80 border border-white/20 bg-white/5 hover:bg-purple-500/15"
               >
-                <rect x="3" y="3" width="7" height="9" />
-                <rect x="14" y="3" width="7" height="5" />
-                <rect x="14" y="12" width="7" height="9" />
-                <rect x="3" y="16" width="7" height="5" />
-              </svg>
-            </button>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={viewMode === 'skyline' ? '#9d4eff' : 'rgba(255, 255, 255, 0.6)'}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="3" width="7" height="9" />
+                  <rect x="14" y="3" width="7" height="5" />
+                  <rect x="14" y="12" width="7" height="9" />
+                  <rect x="3" y="16" width="7" height="5" />
+                </svg>
+              </ToggleGroupItem>
+            </ToggleGroup>
 
             {/* Timeline Toggle Button */}
             <button

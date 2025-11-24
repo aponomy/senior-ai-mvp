@@ -1,5 +1,6 @@
-import Footer from '../components/Footer';
-import PageContainer from '../components/PageContainer';
+import Footer from '../components/layout/Footer';
+import PageContainer from '../components/layout/PageContainer';
+import { Button } from '../components/ui/shadcn/button';
 
 interface SettingsProps {
   onClose?: () => void;
@@ -12,31 +13,14 @@ export default function Settings({ onClose }: SettingsProps) {
         label="Inställningar"
         tools={
           onClose && (
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={onClose}
-              style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '10px',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                color: 'white',
-                fontSize: '18px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-              }}
+              className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 border border-white/20"
             >
               ✕
-            </button>
+            </Button>
           )
         }
       >

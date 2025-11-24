@@ -1,7 +1,6 @@
 // Core message display components for progressive summarization
 
 import type { Message } from '../../types/conversation';
-import { ToolCallDisplay } from './ToolCallDisplay';
 
 interface MessageBubbleProps {
   message: Message;
@@ -30,14 +29,14 @@ export function MessageBubble({ message, isCompact = false, onClick }: MessageBu
       <div
         onClick={onClick}
         style={{
-          padding: isCompact ? '12px 14px' : '16px',
+          padding: isCompact ? '10px 12px' : '12px 14px',
           borderRadius: '12px',
           background: isUser
             ? 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)'
             : 'rgba(255, 255, 255, 0.05)',
           color: '#ffffff',
-          fontSize: isCompact ? '14px' : '16px',
-          lineHeight: '1.6',
+          fontSize: '14px',
+          lineHeight: '1.5',
           cursor: onClick ? 'pointer' : 'default',
           transition: 'all 0.2s ease',
           whiteSpace: 'pre-wrap',
@@ -65,7 +64,9 @@ export function MessageBubble({ message, isCompact = false, onClick }: MessageBu
       {message.toolCalls && message.toolCalls.length > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           {message.toolCalls.map((toolCall) => (
-            <ToolCallDisplay key={toolCall.id} toolCall={toolCall} level="full" />
+            <div key={toolCall.id} style={{ fontSize: '12px', color: '#888' }}>
+              Tool: {toolCall.name}
+            </div>
           ))}
         </div>
       )}
@@ -96,10 +97,10 @@ interface CondensedMessageProps {
 /**
  * Level 2: Condensed/Blurred Message Display
  * Shows 50-70% condensed version with blur effect
+ * Narrower box design for horizontal layout
  */
 export function CondensedMessage({ messages, condensedText, onClick }: CondensedMessageProps) {
   const messageCount = messages.length;
-  const hasToolCalls = messages.some(m => m.toolCalls && m.toolCalls.length > 0);
   
   return (
     <div
@@ -114,75 +115,39 @@ export function CondensedMessage({ messages, condensedText, onClick }: Condensed
         }
       }}
       style={{
-        padding: '14px',
+        padding: '16px',
         borderRadius: '10px',
-        background: 'rgba(255, 255, 255, 0.03)',
+        background: 'rgba(255, 255, 255, 0.06)',
         backdropFilter: 'blur(8px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        color: 'rgba(255, 255, 255, 0.8)',
-        fontSize: '14px',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        color: 'rgba(255, 255, 255, 0.9)',
+        fontSize: '13px',
         lineHeight: '1.5',
         cursor: 'pointer',
         transition: 'all 0.2s ease',
         position: 'relative',
-        minHeight: '60px',
+        height: '140px',
+        maxWidth: '300px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
-        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = 'none';
       }}
     >
-      {/* Blur overlay icon */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '12px',
-          right: '12px',
-          fontSize: '16px',
-          opacity: 0.5,
-        }}
-      >
-        💭
-      </div>
-      
       {/* Condensed text */}
-      <div style={{ marginBottom: hasToolCalls ? '8px' : '0' }}>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
         {condensedText}
-      </div>
-      
-      {/* Tool call indicators */}
-      {hasToolCalls && (
-        <div
-          style={{
-            fontSize: '12px',
-            color: 'rgba(255, 255, 255, 0.6)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            marginTop: '8px',
-          }}
-        >
-          <span>🔧</span>
-          <span>Used {countToolCalls(messages)} tool{countToolCalls(messages) > 1 ? 's' : ''}</span>
-        </div>
-      )}
-      
-      {/* Message count badge */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '12px',
-          right: '12px',
-          fontSize: '11px',
-          color: 'rgba(255, 255, 255, 0.4)',
-          fontWeight: 500,
-        }}
-      >
-        {messageCount} message{messageCount > 1 ? 's' : ''}
       </div>
     </div>
   );
@@ -201,13 +166,14 @@ interface SummaryBoxProps {
 /**
  * Level 3: Abstract Summary Box Display
  * Shows high-level summary of conversation beat
+ * Compact box design for horizontal layout
  */
 export function SummaryBox({ 
-  beatId: _beatId, // Passed but not used in current implementation
+  beatId: _beatId,
   summary, 
-  messageCount, 
-  hasToolCalls = false,
-  timestamp,
+  messageCount: _messageCount,
+  hasToolCalls: _hasToolCalls,
+  timestamp: _timestamp,
   isExpanded = false,
   onClick 
 }: SummaryBoxProps) {
@@ -216,7 +182,7 @@ export function SummaryBox({
       onClick={onClick}
       role="button"
       tabIndex={0}
-      aria-label={`${summary}. ${messageCount} messages. Click to expand.`}
+      aria-label={`${summary}. Click to expand.`}
       aria-expanded={isExpanded}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -227,70 +193,54 @@ export function SummaryBox({
       style={{
         padding: '16px',
         borderRadius: '10px',
-        background: 'rgba(255, 255, 255, 0.08)',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
+        background: 'rgba(255, 255, 255, 0.12)',
+        border: '2px solid rgba(255, 255, 255, 0.25)',
         color: '#ffffff',
-        fontSize: '14px',
+        fontSize: '13px',
         fontWeight: 500,
         lineHeight: '1.5',
         cursor: 'pointer',
         transition: 'all 0.2s ease',
         position: 'relative',
-        minHeight: '70px',
+        height: '140px',
+        maxWidth: '300px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
-        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.18)';
+        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
+        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = 'none';
       }}
     >
-      {/* Expand/collapse chevron */}
+      {/* Expand/collapse indicator */}
       <div
         style={{
           position: 'absolute',
-          top: '16px',
-          right: '16px',
-          fontSize: '18px',
+          bottom: '12px',
+          right: '12px',
+          fontSize: '16px',
           transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
           transition: 'transform 0.3s ease',
-          opacity: 0.6,
+          opacity: 0.7,
         }}
       >
         ⌄
       </div>
       
-      {/* Summary icon */}
-      <div
-        style={{
-          fontSize: '20px',
-          marginBottom: '8px',
-          display: 'inline-block',
-        }}
-      >
-        📦
-      </div>
-      
       {/* Summary text */}
-      <div style={{ paddingRight: '32px', marginBottom: '12px' }}>
+      <div style={{ paddingRight: '24px', paddingLeft: '8px' }}>
         {summary}
-      </div>
-      
-      {/* Metadata footer */}
-      <div
-        style={{
-          display: 'flex',
-          gap: '12px',
-          fontSize: '12px',
-          color: 'rgba(255, 255, 255, 0.5)',
-          marginTop: '8px',
-        }}
-      >
-        <span>{messageCount} messages</span>
-        {hasToolCalls && <span>• 🔧 Tools used</span>}
-        <span>• {formatRelativeTime(timestamp)}</span>
       </div>
     </div>
   );
@@ -301,24 +251,4 @@ function formatMessageTime(date: Date): string {
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
   return `${hours}:${minutes}`;
-}
-
-function formatRelativeTime(date: Date): string {
-  const now = Date.now();
-  const diffMinutes = Math.floor((now - date.getTime()) / (1000 * 60));
-  
-  if (diffMinutes < 1) return 'Just now';
-  if (diffMinutes < 60) return `${diffMinutes} min ago`;
-  
-  const diffHours = Math.floor(diffMinutes / 60);
-  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-  
-  const diffDays = Math.floor(diffHours / 24);
-  return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-}
-
-function countToolCalls(messages: Message[]): number {
-  return messages.reduce((count, msg) => {
-    return count + (msg.toolCalls?.length || 0);
-  }, 0);
 }

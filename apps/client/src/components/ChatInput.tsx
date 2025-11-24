@@ -1,4 +1,7 @@
+import { Send } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { Button } from './ui/shadcn/button';
+import { Input } from './ui/shadcn/input';
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -23,68 +26,31 @@ export default function ChatInput({ onSend }: ChatInputProps) {
   };
 
   return (
-    <div
-      style={{
-        borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-        background: 'rgba(10, 11, 15, 0.8)',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          gap: '8px',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          padding: '8px',
-        }}
-      >
-        <input
+    <div className="border-t border-white/5 bg-[rgba(10,11,15,0.8)]">
+      <div className="flex gap-2 border border-white/10 p-2">
+        <Input
           ref={inputRef}
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Skriv ditt meddelande..."
-          style={{
-            flex: 1,
-            padding: '12px 16px',
-            background: 'rgba(255, 255, 255, 0.05)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '8px',
-            color: 'white',
-            fontSize: '14px',
-            outline: 'none',
-          }}
+          className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus-visible:ring-white/20"
+          aria-label="Meddelandefält"
         />
-        <button
+        <Button
           onClick={handleSendMessage}
           disabled={!message.trim()}
-          style={{
-            width: '44px',
-            height: '44px',
-            borderRadius: '50%',
-            background: message.trim()
-              ? 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)'
-              : 'rgba(255, 255, 255, 0.1)',
-            border: 'none',
-            color: 'white',
-            cursor: message.trim() ? 'pointer' : 'not-allowed',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+          size="icon"
+          className={`w-11 h-11 rounded-full ${
+            message.trim()
+              ? 'bg-gradient-to-br from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700'
+              : 'bg-white/10 cursor-not-allowed'
+          }`}
+          aria-label="Skicka meddelande"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <line x1="22" y1="2" x2="11" y2="13" />
-            <polygon points="22 2 15 22 11 13 2 9 22 2" />
-          </svg>
-        </button>
+          <Send className="w-5 h-5" />
+        </Button>
       </div>
     </div>
   );

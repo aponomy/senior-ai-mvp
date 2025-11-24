@@ -1,7 +1,11 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { addObject, calculateLayout, removeObject } from '../lib/layoutEngine';
 import type { ActiveObject, CalculatedLayout } from '../types/objects';
+
+// Stub implementations for layout engine (old object-based system)
+const calculateLayout = (_objects: ActiveObject[], _viewport: { width: number; height: number }): CalculatedLayout[] => [];
+const addObject = (objectId: string, objects: ActiveObject[]): ActiveObject[] => [...objects, { id: objectId as any, state: 'full' }];
+const removeObject = (objectId: string, objects: ActiveObject[]): ActiveObject[] => objects.filter(obj => obj.id !== objectId);
 
 interface DashboardContextType {
   activeObjects: ActiveObject[];

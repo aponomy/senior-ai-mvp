@@ -28,6 +28,9 @@ export interface Message {
   content: string;
   timestamp: Date;
   toolCalls?: ToolCall[];
+  isMeta?: boolean; // True if message is about navigation/interface/conversation itself
+  isFunction?: boolean; // True if message is executing a function (bank, booking, etc.)
+  functionType?: 'bank' | 'booking' | 'shopping' | 'health' | 'communication'; // Type of function being executed
 }
 
 /**
@@ -86,4 +89,41 @@ export interface ConversationViewProps {
   thresholds?: DisplayThreshold;
   onMessageClick?: (messageId: string) => void;
   onBeatClick?: (beatId: string) => void;
+}
+
+/**
+ * CONVERSATION ATLAS TYPES
+ * 
+ * Type definitions for the Conversation Atlas multi-resolution interface
+ * Technical note: "three-column" references in code refer to the layout structure
+ */
+
+/**
+ * A key point extracted from a conversation
+ * Links to specific messages in the conversation
+ */
+export interface KeyPoint {
+  id: number;
+  text: string;
+  messageIds: string[]; // IDs of messages this keypoint relates to
+  isBuilding?: boolean; // Currently being generated
+}
+
+/**
+ * A summary card representing a conversation segment
+ * Contains multiple key points and metadata
+ */
+export interface Summary {
+  id: number;
+  title: string;
+  icon: string;
+  relativeTime: string; // "2 hours ago", "Yesterday", etc.
+  bulletPoints: string[]; // 2-3 sentence summary bullets
+  keyPoints: KeyPoint[];
+  messageIds: string[]; // All messages included in this summary
+  isBuilding?: boolean; // Currently being generated
+  isMeta?: boolean; // True if this is a meta conversation (about navigation/interface)
+  isFunction?: boolean; // True if this is a function execution (bank, booking, etc.)
+  functionType?: 'bank' | 'booking' | 'shopping' | 'health' | 'communication'; // Type of function
+  timestamp: Date;
 }

@@ -221,6 +221,119 @@ export const mockMessages: Message[] = [
     content: 'You\'re very welcome! I hope the birthday party is wonderful and the cake turns out delicious! If you need any help while baking or have questions about anything else, just let me know. Have a great time shopping! 🎂🦄',
     timestamp: new Date(Date.now() - 30 * 1000), // 30 seconds ago
   },
+  
+  // META CONVERSATION EXAMPLE - User asks about navigating the interface
+  {
+    id: 'msg-31',
+    role: 'user',
+    content: 'Wait, how do I see our previous conversations? I want to go back to the cake recipe.',
+    timestamp: new Date(Date.now() - 25 * 1000),
+    isMeta: true // This is a meta conversation about the interface
+  },
+  {
+    id: 'msg-32',
+    role: 'assistant',
+    content: 'Great question! You can see all your previous conversations in the left column. Each conversation is shown as a card with a summary. Just click on the "🍰 Baking Tips" card to see all the key points from that conversation, including the cake recipe.',
+    timestamp: new Date(Date.now() - 23 * 1000),
+    isMeta: true
+  },
+  {
+    id: 'msg-33',
+    role: 'user',
+    content: 'Oh, I see it now! So if I click on it, what happens?',
+    timestamp: new Date(Date.now() - 20 * 1000),
+    isMeta: true
+  },
+  {
+    id: 'msg-34',
+    role: 'assistant',
+    content: 'When you click on any conversation card, the middle column will show the key points from that conversation. Then you can click on specific key points like "Vanilla cake ingredients list" to jump directly to those messages in this conversation area. It\'s like bookmarks for different parts of our chat!',
+    timestamp: new Date(Date.now() - 18 * 1000),
+    isMeta: true
+  },
+  {
+    id: 'msg-35',
+    role: 'user',
+    content: 'That\'s very clever! Thank you for explaining.',
+    timestamp: new Date(Date.now() - 15 * 1000),
+    isMeta: true
+  },
+  
+  // RETURN TO REGULAR CONVERSATION
+  {
+    id: 'msg-36',
+    role: 'user',
+    content: 'Now, about the party - should I make cupcakes instead of a cake? Would that be easier?',
+    timestamp: new Date(Date.now() - 10 * 1000),
+    isMeta: false // Back to regular conversation
+  },
+  {
+    id: 'msg-37',
+    role: 'assistant',
+    content: 'Cupcakes could be a great alternative! They\'re actually easier in some ways:\n\n**Advantages:**\n- No need to frost between layers\n- Easier to decorate individually\n- Perfect portion control\n- Bake faster (15-18 minutes vs 25-30)\n- Kids love having their own cupcake\n\n**For unicorn theme:**\nYou could do rainbow swirl frosting and add edible glitter or small unicorn toppers!\n\nWould you like me to adjust the recipe for cupcakes? The batter is the same, just the baking time changes.',
+    timestamp: new Date(Date.now() - 8 * 1000),
+    isMeta: false
+  },
+  
+  // FUNCTION EXECUTION - Bank Transaction
+  {
+    id: 'msg-38',
+    role: 'user',
+    content: 'Before I forget - I need to pay my electricity bill. It\'s 847 kronor to Vattenfall.',
+    timestamp: new Date(Date.now() - 6 * 1000),
+    isFunction: true,
+    functionType: 'bank'
+  },
+  {
+    id: 'msg-39',
+    role: 'assistant',
+    content: 'I can help you with that payment. Let me verify the details:\n\n**Payment Details:**\n- Recipient: Vattenfall\n- Amount: 847 SEK\n- Type: Electricity bill\n\nWould you like me to proceed with this payment from your checking account?',
+    timestamp: new Date(Date.now() - 5 * 1000),
+    isFunction: true,
+    functionType: 'bank',
+    toolCalls: [createToolCall('Verify Payment', 'transaction', 'success', 0.8)]
+  },
+  {
+    id: 'msg-40',
+    role: 'user',
+    content: 'Yes please, from my regular account.',
+    timestamp: new Date(Date.now() - 4 * 1000),
+    isFunction: true,
+    functionType: 'bank'
+  },
+  {
+    id: 'msg-41',
+    role: 'assistant',
+    content: 'Processing your payment now...',
+    timestamp: new Date(Date.now() - 3.5 * 1000),
+    isFunction: true,
+    functionType: 'bank',
+    toolCalls: [createToolCall('Bank Transfer', 'transaction', 'success', 2.1)]
+  },
+  {
+    id: 'msg-42',
+    role: 'assistant',
+    content: '✓ Payment completed successfully!\n\n**Receipt:**\n- From: Checking Account (****1234)\n- To: Vattenfall\n- Amount: 847 SEK\n- Transaction ID: TX-2025-1121-847\n- Date: November 21, 2025\n- New Balance: 12,453 SEK\n\nThe payment will be processed within 1 business day. You\'ll receive a confirmation email shortly.',
+    timestamp: new Date(Date.now() - 3 * 1000),
+    isFunction: true,
+    functionType: 'bank'
+  },
+  
+  // RETURN TO REGULAR CONVERSATION
+  {
+    id: 'msg-43',
+    role: 'user',
+    content: 'Perfect! Now back to the cupcakes - yes, please show me how to adjust the recipe.',
+    timestamp: new Date(Date.now() - 2 * 1000),
+    isFunction: false
+  },
+  {
+    id: 'msg-44',
+    role: 'assistant',
+    content: 'Great! Here\'s how to make cupcakes instead:\n\n**Adjusted Recipe:**\n- Use the same batter recipe as before\n- Fill cupcake liners 2/3 full\n- Bake at 350°F (175°C) for 15-18 minutes\n- Makes about 24 cupcakes\n- Cool completely before frosting\n\n**Rainbow Frosting Technique:**\n1. Divide frosting into 3 bowls\n2. Add food coloring (pink, purple, blue)\n3. Put dollops of each color in piping bag\n4. Pipe swirls for rainbow effect\n\nThe kids will love them! 🧁🌈',
+    timestamp: new Date(Date.now() - 1 * 1000),
+    isFunction: false
+  },
 ];
 
 /**
@@ -317,3 +430,179 @@ export function getBeatsByAge(
     ),
   };
 }
+
+/**
+ * CONVERSATION ATLAS MOCK DATA
+ * 
+ * Mock data for testing the Conversation Atlas multi-resolution interface
+ */
+
+import type { Summary } from '../types/conversation';
+
+/**
+ * Mock summaries for testing the Conversation Atlas layout
+ * Simulates a conversation history with multiple topics
+ */
+export const mockSummaries: Summary[] = [
+  // Summary 1: Baking conversation (oldest)
+  {
+    id: 1,
+    title: 'Baking Tips',
+    icon: '🍰',
+    relativeTime: '35 minutes ago',
+    bulletPoints: [
+      'Found vanilla birthday cake recipe',
+      'Listed ingredients and equipment',
+      'Provided simple step-by-step instructions'
+    ],
+    keyPoints: [
+      {
+        id: 1,
+        text: 'Recipe search for granddaughter\'s cake',
+        messageIds: ['msg-2', 'msg-3', 'msg-4']
+      },
+      {
+        id: 2,
+        text: 'Vanilla cake ingredients list',
+        messageIds: ['msg-5', 'msg-6']
+      },
+      {
+        id: 3,
+        text: 'Simple baking instructions',
+        messageIds: ['msg-7', 'msg-8']
+      }
+    ],
+    messageIds: ['msg-1', 'msg-2', 'msg-3', 'msg-4', 'msg-5', 'msg-6', 'msg-7', 'msg-8'],
+    timestamp: new Date(Date.now() - 35 * 60 * 1000)
+  },
+  
+  // Summary 2: Weather and shopping
+  {
+    id: 2,
+    title: 'Shopping Plans',
+    icon: '🛒',
+    relativeTime: '20 minutes ago',
+    bulletPoints: [
+      'Checked today\'s weather - sunny and mild',
+      'Discussed shopping timing',
+      'Listed supermarket sections for ingredients'
+    ],
+    keyPoints: [
+      {
+        id: 4,
+        text: 'Weather check for shopping',
+        messageIds: ['msg-9', 'msg-10', 'msg-11']
+      },
+      {
+        id: 5,
+        text: 'Store sections and hours',
+        messageIds: ['msg-12', 'msg-13', 'msg-14']
+      }
+    ],
+    messageIds: ['msg-9', 'msg-10', 'msg-11', 'msg-12', 'msg-13', 'msg-14', 'msg-15', 'msg-16', 'msg-17'],
+    timestamp: new Date(Date.now() - 20 * 60 * 1000)
+  },
+  
+  // Summary 3: Doctor appointment (building - current)
+  {
+    id: 3,
+    title: 'Appointments',
+    icon: '📅',
+    relativeTime: 'Just now',
+    bulletPoints: [], // Empty because it's building
+    keyPoints: [
+      {
+        id: 6,
+        text: 'Doctor appointment details',
+        messageIds: ['msg-18', 'msg-19', 'msg-20']
+      },
+      {
+        id: 7,
+        text: 'Set reminder notification',
+        messageIds: ['msg-21', 'msg-22', 'msg-23']
+      }
+    ],
+    messageIds: ['msg-18', 'msg-19', 'msg-20', 'msg-21', 'msg-22', 'msg-23'],
+    isBuilding: true, // This is the current conversation
+    timestamp: new Date()
+  },
+  
+  // META SUMMARY: Navigation help (appears below separator)
+  {
+    id: 4,
+    title: 'Using the Interface',
+    icon: '🧭',
+    relativeTime: '15 seconds ago',
+    bulletPoints: [
+      'Explained how to navigate previous conversations',
+      'Showed how to click cards to see key points',
+      'Described how to jump to specific topics'
+    ],
+    keyPoints: [
+      {
+        id: 8,
+        text: 'How to view previous conversations',
+        messageIds: ['msg-31', 'msg-32']
+      },
+      {
+        id: 9,
+        text: 'Understanding key points navigation',
+        messageIds: ['msg-33', 'msg-34', 'msg-35']
+      }
+    ],
+    messageIds: ['msg-31', 'msg-32', 'msg-33', 'msg-34', 'msg-35'],
+    isMeta: true, // This is a meta conversation about the interface
+    timestamp: new Date(Date.now() - 15 * 1000)
+  },
+  
+  // FUNCTION SUMMARY: Bank payment (appears in Functions section)
+  {
+    id: 5,
+    title: 'Bank Payment',
+    icon: '💳',
+    relativeTime: '3 seconds ago',
+    bulletPoints: [
+      'Paid electricity bill to Vattenfall',
+      'Amount: 847 SEK',
+      'Completed successfully from checking account'
+    ],
+    keyPoints: [
+      {
+        id: 10,
+        text: 'Payment verification and details',
+        messageIds: ['msg-38', 'msg-39', 'msg-40']
+      },
+      {
+        id: 11,
+        text: 'Transaction processing and receipt',
+        messageIds: ['msg-41', 'msg-42']
+      }
+    ],
+    messageIds: ['msg-38', 'msg-39', 'msg-40', 'msg-41', 'msg-42'],
+    isFunction: true, // This is a function execution
+    functionType: 'bank',
+    timestamp: new Date(Date.now() - 3 * 1000)
+  }
+];
+
+/**
+ * Helper function to get messages for a specific key point
+ */
+export function getMessagesForKeyPoint(keyPointId: number): string[] {
+  for (const summary of mockSummaries) {
+    const keyPoint = summary.keyPoints.find(kp => kp.id === keyPointId);
+    if (keyPoint) {
+      return keyPoint.messageIds;
+    }
+  }
+  return [];
+}
+
+/**
+ * Helper function to get messages for a specific summary
+ */
+export function getMessagesForSummary(summaryId: number): string[] {
+  const summary = mockSummaries.find(s => s.id === summaryId);
+  return summary ? summary.messageIds : [];
+}
+

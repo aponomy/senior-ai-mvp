@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import ChatInput from './components/ChatInput';
-import Footer from './components/Footer';
+import Footer from './components/layout/Footer';
 import { DashboardProvider, useDashboard } from './context/DashboardContext';
 import Conversation from './pages/Conversation';
 import Functions from './pages/Functions';

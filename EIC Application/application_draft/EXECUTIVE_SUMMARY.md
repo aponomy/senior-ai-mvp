@@ -1,8 +1,23 @@
 # EIC Application Assembly - Executive Summary
 
 **Date:** November 24, 2025  
+**Project:** Senior AI — Accessibility Layer for the AI Ecosystem  
 **Scope:** Issue #12 - Implementation Plan & Team  
 **Status:** ✅ Initial Assembly Complete - Ready for Review
+
+---
+
+## Project Overview
+
+**Senior AI** is an **accessibility layer for the entire AI ecosystem**, making thousands of AI services (ChatGPT, Midjourney, DALL-E, Claude, and others) accessible to Europe's 125 million elderly citizens and 50 million people with cognitive challenges through our proprietary **Conversation Atlas** interface.
+
+We enable elderly users to:
+- **Create**: Generate images, videos, presentations, written works
+- **Learn**: Research topics, explore interests, discover knowledge
+- **Connect**: Communicate, collaborate, share memories
+- **Execute**: Banking, healthcare, government, shopping (14+ life domains)
+
+The AI revolution offers transformative creative and learning opportunities—but these remain inaccessible to elderly users who find AI tools too hard to find, understand, or use. Senior AI solves this through cognitive-accessible design that wraps powerful AI services in an interface built for elderly users from the ground up.
 
 ---
 

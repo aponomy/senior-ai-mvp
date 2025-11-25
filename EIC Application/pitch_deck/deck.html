@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior AI Pitch Deck</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    
+    /* Scale text based on viewport */
+    .slide-container {
+      font-size: clamp(1rem, 2.5vw, 2rem);
+    }
+    
+    @media print {
+      .slide-container {
+        page-break-after: always;
+        break-after: page;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-50 min-h-screen">
+  <div id="app"></div>
+  
+  <script>
+    // Embedded slide data
+    const DECK_META = {"title": "Senior AI Pitch Deck", "description": "Accessibility gateway to AI services for 125M elderly Europeans", "theme": "dark", "version": "1.0.0"};
+    const SLIDES = [
+  {
+    "id": "title-vision",
+    "title": "Senior AI",
+    "subtitle": "The Accessible Gateway to AI for 125M Elderly Europeans",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 3,
+        "text": "Create \u2022 Learn \u2022 Explore \u2022 Execute"
+      },
+      {
+        "type": "text",
+        "text": "EU-Sovereign \u2022 Cognitive-Accessible \u2022 14+ Domains"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Why Now: The Mandate for Inclusion"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "\ud83e\udd16 AI Revolution: Thousands of tools are inaccessible to elderly users.",
+          "\ud83c\uddea\ud83c\uddfa Accessibility Act June 2025: Compliance deadline mandates accessible services.",
+          "\ud83d\udcca Digital Decade 2030: 80% digital skills target with a 40-50 point gap for seniors."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Proven Results (TRL 5 Validation)"
+      },
+      {
+        "type": "metric",
+        "label": "Task Completion",
+        "value": "2\u00d7",
+        "sublabel": "vs. leading voice assistants"
+      },
+      {
+        "type": "metric",
+        "label": "Cognitive Load",
+        "value": "-50%",
+        "sublabel": "NASA-TLX improvement"
+      },
+      {
+        "type": "metric",
+        "label": "Critical Errors",
+        "value": "-80%",
+        "sublabel": "Validated with elderly users"
+      },
+      {
+        "type": "metric",
+        "label": "Context Retention",
+        "value": "30+ turns",
+        "sublabel": "vs. 3-5 turn baseline"
+      }
+    ]
+  },
+  {
+    "id": "problem",
+    "title": "Digital Exclusion at Scale",
+    "subtitle": "70\u201385M elderly Europeans are left behind",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Two revolutions without seniors in mind"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Banking: 25\u201330% of branches closing, forcing customers online.",
+          "Healthcare: E-prescriptions are now mandatory across Europe.",
+          "Government: 80\u201390% of services are digital-only.",
+          "Result: 40\u201360% of seniors abandon multi-step tasks mid-process."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "AI Revolution is inaccessible"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Thousands of AI tools (ChatGPT, Midjourney, Perplexity, Adobe Firefly) are too complex to find or use.",
+          "An additional 50M Europeans with ADHD, MCI, or early dementia hit the same barriers.",
+          "Seniors are excluded from creativity, lifelong learning, and digital autonomy."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Current solutions fail the cognitive test"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Alexa / Google Assistant: Linear interactions that lose context after 3\u20135 turns.",
+          "ElliQ companion robots: High cost and narrow scope focused on companionship.",
+          "AI suites: Interfaces never designed for elderly cognition or low digital literacy."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "users-market",
+    "title": "Our Users & Market Opportunity",
+    "subtitle": "Creative, curious, and independent seniors",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Personas we design for"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Maria, 78 \u2013 Creates family photo books, learns history, writes memoirs. Needs long-term context and safe exploration.",
+          "Lars, 83 \u2013 Researches WWII ships, generates images, stays informed. Needs multi-day memory and tools that preserve independence.",
+          "Ingrid, 72 \u2013 Digital artist with ADHD, collaborates with grandkids. Needs non-destructive branching and structured support."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Total Addressable Market"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Primary: 70\u201385M seniors with low digital skills facing exclusion (\u20ac6.7\u201312.2B).",
+          "Secondary: 23\u201331M users with cognitive challenges such as MCI or ADHD (\u20ac0.8\u20132.9B).",
+          "Tertiary: 20\u201325M proactive users preparing to age-in-place (\u20ac1.0\u20132.2B)."
+        ]
+      },
+      {
+        "type": "text",
+        "text": "Combined annual opportunity: \u20ac6\u201314B driven by the need for cognitive-accessible digital support."
+      }
+    ]
+  },
+  {
+    "id": "solution",
+    "title": "Our Solution: The AI Accessibility Layer",
+    "subtitle": "One interface that unlocks thousands of AI services",
+    "blocks": [
+      {
+        "type": "text",
+        "text": "Senior AI functions as the accessibility layer for the entire AI ecosystem, simplifying discovery and execution across 14+ life domains."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "What we enable"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "\ud83c\udfa8 Create \u2013 Images, videos, presentations, stories, poems (Create, Media, Entertainment).",
+          "\ud83d\udcda Learn \u2013 Research topics, explore culture, stay informed safely (Learning, Services).",
+          "\ud83d\udcf2 Connect \u2013 Share memories, collaborate with family, communicate effortlessly (Communication, Home).",
+          "\ud83c\udfdb Execute \u2013 Banking, healthcare, government, shopping, legal, mobility (Healthcare, Banking, Government, Transport, Shopping, Legal)."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Cognitive-accessible by design"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Conversation Atlas retains 30+ turns of context with multi-resolution views.",
+          "Safe Branching (DAG) lets users explore \u201cwhat if\u201d scenarios without losing progress.",
+          "AI Apps turn complex workflows (e.g., bank transfers) into clear, visual step-by-step journeys."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "innovation",
+    "title": "Four Technical Breakthroughs",
+    "subtitle": "Creating a 24\u201336 month defensibility moat",
+    "blocks": [
+      {
+        "type": "text",
+        "text": "Senior AI is the first elderly-accessible AI gateway that merges cognitive design with EU-sovereign orchestration."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. Branch-Preserving Conversation Atlas"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Synchronized timeline, key points, and detail views.",
+          "Delivers 6\u201310\u00d7 context retention without cognitive overload."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Non-Destructive Branching via DAG"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Directed Acyclic Graph keeps every branch versioned and recoverable.",
+          "Enables safe exploration with 60\u201380% error reduction."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Capability-Scoped Secure Execution"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Per-task capability tokens bound to conversational context.",
+          "Population-specific safety policies for regulated domains."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "4. EU-Sovereign Orchestration"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "GDPR-first architecture with EU data residency.",
+          "Deep integration with BankID / eIDAS 2.0 and healthcare standards."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "validation",
+    "title": "Validation & TRL Progression",
+    "subtitle": "Prototype proven with elderly users (TRL 5)",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Controlled trial vs. Alexa / Google"
+      },
+      {
+        "type": "metric",
+        "label": "Task Completion",
+        "value": "82\u201389%",
+        "sublabel": "\u22652\u00d7 improvement over baseline"
+      },
+      {
+        "type": "metric",
+        "label": "Cognitive Load",
+        "value": "3.2",
+        "sublabel": "50% reduction on NASA-TLX"
+      },
+      {
+        "type": "metric",
+        "label": "Critical Errors",
+        "value": "0.8\u20131.2",
+        "sublabel": "60\u201380% fewer per task"
+      },
+      {
+        "type": "metric",
+        "label": "Context Retention",
+        "value": "30+ turns",
+        "sublabel": "6\u201310\u00d7 improvement"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Path to TRL 8 (18 months with EIC grant)"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "M6 Alpha: 4 domains live, 50\u2013100 users, BankID sandbox.",
+          "M12 Production v1.0: 14 domains, 150\u2013250 users, BankID production approval.",
+          "M18 TRL 8: 10\u201315 pilots, 250\u2013450 users, EN 301 549 certification."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "market-strategy",
+    "title": "Market Opportunity & Beachhead",
+    "subtitle": "From \u20ac380\u2013410M SOM in Year 5",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Serviceable Obtainable Market"
+      },
+      {
+        "type": "text",
+        "text": "Year 5 target: \u20ac380\u2013410M by serving 2.0\u20132.3M seniors across initial geographies."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Beachhead: Scandinavia + DACH"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Mature digital identity infrastructure (BankID, eIDAS).",
+          "High elderly digital literacy (65\u201370% online).",
+          "Proven willingness to pay \u20ac150\u2013180 ARR for independence."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Domain expansion plan"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Phase 1 (Alpha): Healthcare, Banking, Transport, Government.",
+          "Phase 2 (Beta): +Shopping, Food, Energy, Tax (8 domains total).",
+          "Phase 3 (Production): +Legal, Insurance, Entertainment, Communication, Travel, Home Services (14 domains)."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "competition",
+    "title": "Competitive Positioning",
+    "subtitle": "Owning the complex tasks + elderly design quadrant",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2\u00d72 market landscape"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Simple tasks + generic design: Alexa, Google Assistant.",
+          "Simple tasks + elderly design: ElliQ, senior tablets.",
+          "Complex tasks + generic design: ChatGPT, Claude, AI suites.",
+          "Complex tasks + elderly design: Senior AI (only player)."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Why competitors can't follow quickly"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Proprietary Conversation Atlas + DAG architecture (18\u201324 months R&D).",
+          "Regulatory moat: GDPR-first, EN 301 549 readiness, BankID / eIDAS integration.",
+          "Population-specific safety tuning delivering 60\u201380% fewer critical errors.",
+          "Network effects: More domains = richer, shareable memory across services."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "business-model",
+    "title": "Business Model & Unit Economics",
+    "subtitle": "Dual revenue engine with SaaS margins",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Revenue mix (Year 3 estimate)"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "B2C Direct \u2013 40%: \u20ac120\u2013180 ARPU via self-serve SaaS tiers.",
+          "B2B2C White-Label \u2013 45%: \u20ac30\u201350 ARPU subsidized by banks, insurers, municipalities.",
+          "B2B Enterprise \u2013 15%: \u20ac600\u20131,200 per seat for call centers and care homes."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Unit economics at scale"
+      },
+      {
+        "type": "metric",
+        "label": "Gross Margin",
+        "value": "85%",
+        "sublabel": "Software-only model"
+      },
+      {
+        "type": "metric",
+        "label": "LTV",
+        "value": "\u20ac540",
+        "sublabel": "4+ year lifetime"
+      },
+      {
+        "type": "metric",
+        "label": "CAC",
+        "value": "\u20ac80",
+        "sublabel": "Blended across channels"
+      },
+      {
+        "type": "metric",
+        "label": "LTV:CAC",
+        "value": "6.8 : 1",
+        "sublabel": "Year 5 target"
+      },
+      {
+        "type": "text",
+        "text": "Break-even by Year 2\u20133 at 40\u201366K monthly active users with 10 month payback."
+      }
+    ]
+  },
+  {
+    "id": "go-to-market",
+    "title": "Go-to-Market Strategy",
+    "subtitle": "Multi-channel rollout anchored in trust",
+    "blocks": [
+      {
+        "type": "text",
+        "text": "We focus 60% of resources on B2B2C channels that leverage institutional trust while building direct SaaS momentum."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Primary channels"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "1. B2B2C White-Label \u2013 12 pilots secured with Nordea, Folksam, Allianz exploring participation.",
+          "2. Municipal Partnerships \u2013 Digital inclusion programs with Malm\u00f6, Uppsala, Link\u00f6ping.",
+          "3. B2C Direct \u2013 Performance marketing and content for tech-literate seniors and adult children.",
+          "4. NGOs & Senior Centers \u2013 40+ workshops and demos across Scandinavia & DACH.",
+          "5. Pharmacy & Healthcare \u2013 Point-of-need demos with Apoteket (SE) and dm-drogerie (DE)."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Pilot momentum"
+      },
+      {
+        "type": "text",
+        "text": "M6\u2013M18: Launching 10\u201315 operational pilots engaging 250\u2013450 seniors to reach TRL 8."
+      }
+    ]
+  },
+  {
+    "id": "compliance",
+    "title": "Regulatory Compliance \u2013 The EU Asset",
+    "subtitle": "Trust, safety, and legal readiness built-in",
+    "blocks": [
+      {
+        "type": "text",
+        "text": "Compliance is a competitive advantage for operating in banking, healthcare, and government domains."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Four compliance pillars"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "GDPR & Data Privacy \u2013 EU data residency via Cloudflare regions, subscription-funded model (live).",
+          "Accessibility (EAA) \u2013 WCAG 2.1 AAA experience, targeting EN 301 549 certification by M15.",
+          "Identity & Orchestration \u2013 BankID / eIDAS 2.0 ready, FHIR / EHDS integrations in progress.",
+          "AI Act \u2013 Transparency, human oversight dashboard, and risk management system ready for Q2 2026 compliance."
+        ]
+      },
+      {
+        "type": "text",
+        "text": "Result: A defensible moat against non-EU competitors and a trust foundation for vulnerable users."
+      }
+    ]
+  },
+  {
+    "id": "roadmap",
+    "title": "18-Month Roadmap",
+    "subtitle": "From TRL 5 prototype to TRL 8 production",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Phase 1 \u2013 Alpha (M1\u2013M6)"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "4 core domains live: Healthcare, Banking, Transport, Government.",
+          "50\u2013100 test users in Sweden; BankID sandbox integrations.",
+          "Milestone M3: first e-prescription workflow, M6: alpha launch."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Phase 2 \u2013 Beta (M7\u2013M12)"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Add Shopping, Food, Energy, Tax for 8 domains total.",
+          "150\u2013250 users in pilots across Scandinavia.",
+          "Milestone M9: EN 301 549 audit, M12: Production v1.0 + BankID approval."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Phase 3 \u2013 Production (M13\u2013M18)"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "All 14+ domains live including Legal, Insurance, Communication, Travel, Home services.",
+          "250\u2013450 users via pilots in Scandinavia and DACH.",
+          "Milestones: M15 ISO 27001, M18 TRL 8 qualification & Series A readiness."
+        ]
+      },
+      {
+        "type": "text",
+        "text": "Risk budget: \u20ac800K (12%) reserved for AI Act compliance, integration delays, and user adoption experiments."
+      }
+    ]
+  },
+  {
+    "id": "team",
+    "title": "Team & Advisors",
+    "subtitle": "AI, healthcare, and EU regulatory depth",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Founding team"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "CEO & Co-founder \u2013 AI product leader with elderly care and EU policy expertise.",
+          "CTO & Co-founder \u2013 Conversational AI and EU data architecture specialist."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Scaling plan"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "M6: 8\u201310 FTE (ML engineers, UX, DevSecOps).",
+          "M12: 12\u201315 FTE (add compliance, B2B2C sales, pilot coordination).",
+          "M18: 18\u201322 FTE with dedicated DACH expansion team."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Advisory board"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "Elderly care expert guiding user research and gerontology insights.",
+          "EU regulatory specialist (AI Act, DG CONNECT background).",
+          "AI/ML scale-up advisor with relevant product launches."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ask",
+    "title": "The Ask & Projected Impact",
+    "subtitle": "Scaling an EU-sovereign accessibility platform",
+    "blocks": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Funding request (\u20ac6.5\u20137M)"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "EIC Grant \u2013 \u20ac2.5M non-dilutive for TRL 5 \u2192 TRL 8 R&D, certification, pilots (18 months).",
+          "EIC Equity \u2013 \u20ac3.0M for team scaling, customer acquisition, platform hardening (M6\u2013M12).",
+          "Co-investment \u2013 \u20ac1.5\u20132.0M strategic capital for geographic expansion (M6\u2013M18)."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Year 5 outlook"
+      },
+      {
+        "type": "metric",
+        "label": "ARR",
+        "value": "\u20ac64.1M",
+        "sublabel": "Base case forecast"
+      },
+      {
+        "type": "metric",
+        "label": "EBITDA Margin",
+        "value": "52%",
+        "sublabel": "Capital-efficient growth"
+      },
+      {
+        "type": "metric",
+        "label": "Break-even",
+        "value": "Year 2\u20133",
+        "sublabel": "At 40\u201366K MAU"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Societal impact"
+      },
+      {
+        "type": "bulletList",
+        "items": [
+          "\u20ac970M annual economic value via delayed institutionalization and reduced caregiver burden.",
+          "10.8 : 1 societal ROI compared to user spend.",
+          "Restores autonomy for 70\u201385M vulnerable Europeans."
+        ]
+      }
+    ]
+  }
+];
+    
+    // App state
+    let currentSlideIndex = 0;
+    let showNav = false;
+    
+    // Block renderers
+    function renderBlock(block) {
+      switch (block.type) {
+        case 'heading':
+          const sizes = { 1: 'text-[2em]', 2: 'text-[1.5em]', 3: 'text-[1.2em]' };
+          const weight = { 1: 'font-bold', 2: 'font-semibold', 3: 'font-medium' };
+          return `<h${block.level} class="${sizes[block.level]} ${weight[block.level]} mb-[0.5em]">${escapeHtml(block.text)}</h${block.level}>`;
+        
+        case 'text':
+          return `<p class="text-[1em] text-slate-200 mb-[0.5em] leading-relaxed">${escapeHtml(block.text)}</p>`;
+        
+        case 'bulletList':
+          const items = block.items.map(item => 
+            `<li class="flex items-start gap-[0.5em] mb-[0.3em]">
+              <span class="text-slate-400 mt-[0.2em]">•</span>
+              <span class="text-[1em] text-slate-200">${escapeHtml(item)}</span>
+            </li>`
+          ).join('');
+          return `<ul class="mb-[0.5em]">${items}</ul>`;
+        
+        case 'metric':
+          const sublabel = block.sublabel ? 
+            `<div class="text-[0.5em] text-slate-500 mt-[0.2em]">${escapeHtml(block.sublabel)}</div>` : '';
+          return `<div class="inline-block bg-slate-800 p-[1em] mr-[0.5em] mb-[0.5em]">
+            <div class="text-[0.6em] text-slate-400 mb-[0.2em]">${escapeHtml(block.label)}</div>
+            <div class="text-[2em] font-bold text-emerald-400">${escapeHtml(block.value)}</div>
+            ${sublabel}
+          </div>`;
+        
+        case 'image':
+          return `<img src="${escapeHtml(block.src)}" alt="${escapeHtml(block.alt)}" class="max-w-full h-auto mb-[0.5em]">`;
+        
+        default:
+          return '';
+      }
+    }
+    
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    function renderSlide(slide) {
+      const title = slide.title ? 
+        `<h1 class="text-[2.5em] font-bold mb-[0.3em]">${escapeHtml(slide.title)}</h1>` : '';
+      const subtitle = slide.subtitle ? 
+        `<p class="text-[1.2em] text-slate-300 mb-[0.8em]">${escapeHtml(slide.subtitle)}</p>` : '';
+      
+      const blocks = slide.blocks.map(renderBlock).join('');
+      
+      return `
+        <div class="flex flex-col h-full">
+          ${title || subtitle ? `<div class="mb-[1em]">${title}${subtitle}</div>` : ''}
+          <div class="flex-1 overflow-auto">
+            ${blocks}
+          </div>
+        </div>
+      `;
+    }
+    
+    function renderNavOverlay() {
+      if (!showNav) return '';
+      
+      const slidesList = SLIDES.map((slide, i) => `
+        <li>
+          <button 
+            onclick="goToSlide(${i}); showNav = false; render();"
+            class="w-full text-left px-3 py-2 rounded transition-colors ${
+              i === currentSlideIndex ? 'bg-slate-700' : 'hover:bg-slate-800'
+            }">
+            ${i + 1}. ${escapeHtml(slide.title || slide.id)}
+          </button>
+        </li>
+      `).join('');
+      
+      return `
+        <div class="fixed inset-0 bg-black/60 flex items-center justify-center no-print z-50" 
+             onclick="showNav = false; render();">
+          <div class="bg-slate-900 rounded-xl p-6 max-w-lg w-full max-h-[70vh] overflow-auto" 
+               onclick="event.stopPropagation();">
+            <h2 class="text-lg font-semibold mb-4">Slides</h2>
+            <ul class="space-y-2">${slidesList}</ul>
+          </div>
+        </div>
+      `;
+    }
+    
+    function render() {
+      if (SLIDES.length === 0) {
+        document.getElementById('app').innerHTML = `
+          <div class="min-h-screen flex items-center justify-center">
+            <div class="text-center">
+              <h1 class="text-4xl font-bold mb-4">No Slides Found</h1>
+              <p class="text-slate-400">This deck has no slides.</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+      
+      const slide = SLIDES[currentSlideIndex];
+      const canGoPrev = currentSlideIndex > 0;
+      const canGoNext = currentSlideIndex < SLIDES.length - 1;
+      
+      document.getElementById('app').innerHTML = `
+        <!-- Title bar -->
+        <div class="fixed top-4 left-4 right-4 flex items-center justify-between no-print z-40">
+          <button 
+            onclick="showNav = !showNav; render();"
+            class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 backdrop-blur-sm transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          ${DECK_META.title ? `<div class="text-sm text-slate-400 bg-slate-800/80 backdrop-blur-sm px-3 py-1.5 rounded-lg">${escapeHtml(DECK_META.title)}</div>` : ''}
+        </div>
+        
+        <!-- Main slide area - Full viewport, no rounded corners -->
+        <div class="fixed inset-0 bg-slate-950 flex items-center justify-center">
+          <div class="slide-container w-full h-full bg-slate-900 p-[3vw] overflow-auto">
+            ${renderSlide(slide)}
+          </div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 no-print z-40 bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+          <button 
+            onclick="previousSlide()"
+            ${!canGoPrev ? 'disabled' : ''}
+            class="p-2 rounded-full hover:bg-slate-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+          <span class="text-sm text-slate-200 font-medium min-w-[60px] text-center">
+            ${currentSlideIndex + 1} / ${SLIDES.length}
+          </span>
+          <button 
+            onclick="nextSlide()"
+            ${!canGoNext ? 'disabled' : ''}
+            class="p-2 rounded-full hover:bg-slate-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Nav overlay -->
+        ${renderNavOverlay()}
+      `;
+    }
+    
+    function goToSlide(index) {
+      if (index >= 0 && index < SLIDES.length) {
+        currentSlideIndex = index;
+        render();
+      }
+    }
+    
+    function previousSlide() {
+      goToSlide(currentSlideIndex - 1);
+    }
+    
+    function nextSlide() {
+      goToSlide(currentSlideIndex + 1);
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') nextSlide();
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') previousSlide();
+      if (e.key === 'Escape') {
+        showNav = false;
+        render();
+      }
+      if (e.key === 'Home') goToSlide(0);
+      if (e.key === 'End') goToSlide(SLIDES.length - 1);
+    });
+    
+    // Initial render
+    render();
+  </script>
+</body>
+</html>

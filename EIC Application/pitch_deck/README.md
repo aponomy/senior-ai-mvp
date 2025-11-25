@@ -1,90 +1,103 @@
-# Senior AI - EIC Accelerator Pitch Deck
+# senior_ai_pitchdeck
 
-**Version:** 1.0  
-**Date:** November 24, 2025  
-**Issue:** #15 - EIC Application: Pitch Deck & Video Pitch
 
----
 
-## Overview
+## Structure
 
-This folder contains the complete pitch deck for the EIC Accelerator application. Each slide is a separate Markdown file for easy editing and collaboration.
+This is a data-only slide deck folder. All the React/Node.js infrastructure lives in the MCP package.
 
-## Deck Structure
+```
+pitch_deck/
+├── deck.meta.json    # Presentation metadata
+└── slides/           # Slide files (ordered by name)
+    ├── 000_intro.mjs
+    └── 001_features.mjs
+```
 
-### Core Slides (14 slides - 10 minutes)
+## Adding Slides
 
-1. **Slide_01_Title.md** - Title, value proposition, why now
-2. **Slide_02_Problem.md** - Problem and urgency
-3. **Slide_03_Users.md** - Users and segments
-4. **Slide_04_Solution.md** - Solution overview
-5. **Slide_05_Innovation.md** - Excellence — what makes it novel
-6. **Slide_06_Evidence.md** - Evidence and TRL
-7. **Slide_07_Market.md** - Market opportunity and beachhead
-8. **Slide_08_Competition.md** - Competitive landscape and differentiation
-9. **Slide_09_Business_Model.md** - Business model, unit economics, scalability
-10. **Slide_10_GTM.md** - Go-to-market and traction
-11. **Slide_11_Regulation.md** - Regulation, ethics, and EU alignment
-12. **Slide_12_Roadmap.md** - Technical roadmap and risk/implementation
-13. **Slide_13_Team.md** - Team and governance
-14. **Slide_14_Ask.md** - Ask and use of funds
+Create new `.mjs` files in the `slides/` folder:
 
-### Appendix Slides (5 slides - for Q&A)
+```javascript
+// slides/002_problem.mjs
+export default {
+  id: "problem",
+  title: "The Problem",
+  blocks: [
+    {
+      type: "bulletList",
+      items: [
+        "Pain point 1",
+        "Pain point 2",
+        "Pain point 3"
+      ]
+    }
+  ]
+};
+```
 
-- **Appendix_A_Architecture.md** - System architecture
-- **Appendix_B_Validation.md** - Validation protocol and metrics
-- **Appendix_C_Competitive_Matrix.md** - Detailed competitive matrix
-- **Appendix_D_Budget.md** - Budget and work plan details
-- **Appendix_E_Partners.md** - Letters of intent and partners
+**Naming convention:** Use `NNN_slug.mjs` format (e.g., `002_problem.mjs`) to control slide order.
 
----
+## Block Types
 
-## Design Principles
+### Heading
+```javascript
+{ type: 'heading', level: 2, text: 'Section Title' }
+```
 
-### Visual Design
-- **High contrast**: WCAG AA minimum for accessibility
-- **Large typography**: Clear, readable fonts
-- **Simple diagrams**: One key message per slide
-- **Two-layer reading**: Bold claim + technical detail
-- **Consistent palette**: Trust and safety (calm colors, white space)
+### Text
+```javascript
+{ type: 'text', text: 'Your paragraph here...' }
+```
 
-### Content Strategy
-- **Evidence-led**: Show measured outcomes early
-- **EU sovereignty narrative**: GDPR-first, onshore processing
-- **Balance**: 30-35% Excellence, 35-40% Impact/Market, 25-30% Implementation
-- **Reader rails**: "So what?" and "EU added value" on each slide
+### Bullet List
+```javascript
+{
+  type: 'bulletList',
+  items: ['Item 1', 'Item 2', 'Item 3']
+}
+```
 
----
+### Metric
+```javascript
+{
+  type: 'metric',
+  label: 'Revenue',
+  value: '$1M',
+  sublabel: 'ARR'  // optional
+}
+```
 
-## Next Steps
+### Image
+```javascript
+{
+  type: 'image',
+  src: '/path/to/image.png',
+  alt: 'Description'
+}
+```
 
-1. **Review & Refine**: Review each slide's content with team
-2. **Visual Design**: Create professional design template
-3. **Assets**: Gather images, screenshots, diagrams, team photos
-4. **Script**: Prepare 10-minute talk track (1-2 sentences per slide)
-5. **Video**: Develop 3-minute video pitch script (separate document)
-6. **Review**: External advisor feedback
-7. **Finalize**: Export to PDF/PPTX for submission
+## Viewing
 
----
+Ask Copilot to serve the presentation:
+```
+"Serve the presentation"
+```
 
-## Key Messages
+Or use the MCP tool directly.
 
-### One-Sentence Value Proposition
-"Senior AI doubles task completion and halves cognitive load for 125M elderly Europeans, across 14+ life domains, with GDPR-first data handling."
+## Exporting
 
-### Why Now
-European Accessibility Act (June 2025), Digital Decade targets, eIDAS 2.0 rollout, and AI maturity enable scale.
+Ask Copilot to export as PDF:
+```
+"Export this deck as PDF"
+```
 
-### Core Differentiation
-No competitor combines EU data sovereignty + elderly-specific cognitive accessibility + multi-domain execution + accessible pricing (€10-20/month).
+The presenter and PDF export infrastructure are provided by the MCP package.
 
----
+## Editing with Copilot
 
-## Sources
-
-- **Part B Section 1 (Excellence)**: Technical innovation details
-- **Part B Section 2 (Impact)**: Market opportunity, business model
-- **Part B Section 3 (Implementation)**: Roadmap, team, work packages
-- **Financial Plan Annex**: Unit economics, financials
-- **Expert Consultation**: EIC pitch deck best practices (Nov 2025)
+Copilot understands the slide format. Just ask:
+- "Add a slide about pricing"
+- "Add metrics showing 200% growth"
+- "Create a slide with our team members"

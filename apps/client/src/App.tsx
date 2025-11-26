@@ -7,6 +7,7 @@ import Conversation from './pages/Conversation';
 import Functions from './pages/Functions';
 import Settings from './pages/Settings';
 import Topics from './pages/Topics';
+import ThreePanelLayout from './pages/ThreePanel';
 
 type ConversationSize = 'small' | 'medium' | 'large' | null;
 
@@ -17,8 +18,14 @@ function AppContent() {
   const { activeObjects } = useDashboard();
   const isTopicsRoute = location.pathname === '/topics';
   const isChatActive = activeObjects.some(obj => obj.id === 'chatWindow');
+  const isThreePanelRoute = location.pathname === '/';
   
   const [showConversation, setShowConversation] = useState<ConversationSize>('large'); // null
+
+  // If ThreePanel route, render it fullscreen
+  if (isThreePanelRoute) {
+    return <ThreePanelLayout />;
+  }
 
   // When navigation happens and conversation is large, resize to medium
   const handleNavigation = (path: string) => {
@@ -89,7 +96,7 @@ function AppContent() {
           {/* Routes */}
           <div style={{ flex: 1, overflow: 'hidden' }}>
             <Routes>
-              <Route path="/" element={<>Hello</>} />
+              <Route path="/" element={<ThreePanelLayout />} />
               <Route path="/topics" element={<Topics timelineRef={refTimeline} conversationWidth={getConversationWidth()} />} />
               <Route path="/functions" element={<Functions />} />
               <Route path="/settings" element={<Settings />} />

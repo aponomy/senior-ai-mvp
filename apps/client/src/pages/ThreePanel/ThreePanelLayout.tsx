@@ -1,11 +1,11 @@
 // ThreePanel Layout - Main three-panel interface
+import { Button } from "@/components/ui/shadcn/button";
+import { Grid3x3, MoreHorizontal, Share2 } from "lucide-react";
 import React from "react";
-import { LeftPanel } from "./components/LeftPanel";
 import { CenterPanel } from "./components/CenterPanel";
+import { LeftPanel } from "./components/LeftPanel";
 import { RightPanel } from "./components/RightPanel";
 import { ThreePanelProvider } from "./context/ThreePanelContext";
-import { Button } from "@/components/ui/shadcn/button";
-import { MoreHorizontal, Share2, Grid3x3 } from "lucide-react";
 
 export const ThreePanelLayout: React.FC = () => {
   return (

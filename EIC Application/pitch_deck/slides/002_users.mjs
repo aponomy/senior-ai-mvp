@@ -16,7 +16,8 @@ export default {
       items: [
         "Maria, 78 – Creates family photo books, learns history, writes memoirs. Needs long-term context and safe exploration.",
         "Lars, 83 – Researches WWII ships, generates images, stays informed. Needs multi-day memory and tools that preserve independence.",
-        "Ingrid, 72 – Digital artist with ADHD, collaborates with grandkids. Needs non-destructive branching and structured support."
+        "Ingrid, 72 – Digital artist with ADHD, collaborates with grandkids. Needs non-destructive branching and structured support.",
+        "Erik, 84 – Lives with early memory challenges. Needs daily reminders, medication tracking, family adds memories for context."
       ]
     },
     {

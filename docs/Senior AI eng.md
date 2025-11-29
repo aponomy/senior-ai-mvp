@@ -69,6 +69,9 @@ We've focused our design around three key personas who represent the diverse nee
 * **Ingrid, 72 (Copenhagen)**: A lifelong artist with ADHD who wants to explore new creative mediums.
   * **Wants**: To create digital art, explore new music, and collaborate on projects with her grandchildren.
   * **Needs**: A non-destructive interface that allows her to explore tangents without losing her train of thought, easily resume tasks, and provides structure without feeling overwhelming.
+* **Erik, 84 (Malmö)**: A retired postal worker with early signs of memory challenges.
+  * **Wants**: To remember daily medications, track appointments, review what he did today, and stay independent at home.
+  * **Needs**: Structured daily reminders, family can add photos and memories for context, and clear visual cues for routines and schedules.
 
 ### Quantifying the Market Opportunity
 

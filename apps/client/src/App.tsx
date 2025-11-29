@@ -6,8 +6,8 @@ import { DashboardProvider, useDashboard } from './context/DashboardContext';
 import Conversation from './pages/Conversation';
 import Functions from './pages/Functions';
 import Settings from './pages/Settings';
-import Topics from './pages/Topics';
 import ThreePanelLayout from './pages/ThreePanel';
+import Topics from './pages/Topics';
 
 type ConversationSize = 'small' | 'medium' | 'large' | null;
 

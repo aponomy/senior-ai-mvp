@@ -1,17 +1,17 @@
 // Right Panel - Tool cards and studio items
+import { Button } from "@/components/ui/shadcn/button";
+import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
+import {
+    AudioLines,
+    BrainCircuit,
+    Copy,
+    FileText,
+    MoreHorizontal,
+    Plus,
+    Video,
+} from "lucide-react";
 import React from "react";
 import { useThreePanel } from "../context/ThreePanelContext";
-import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
-import { Button } from "@/components/ui/shadcn/button";
-import {
-  AudioLines,
-  Video,
-  BrainCircuit,
-  FileText,
-  MoreHorizontal,
-  Plus,
-  Copy,
-} from "lucide-react";
 
 const baseToolCard =
   "relative flex flex-col justify-between " +

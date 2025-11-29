@@ -76,6 +76,9 @@ Den strategiska insikten bakom Senior AI är inte att äldre "blir lämnade utan
 * **Ingrid, 72, Köpenhamn** Konstnär med ADHD som vill utforska digital kreativitet.
   * Önskemål: Skapa digital konst, utforska ny musik och samarbeta kreativt med sina barnbarn.
   * Behov: Möjligheten att utforska idéer i "sidospår" utan att förstöra sitt arbete (icke-förstörande förgrening), kunna återuppta uppgifter och få struktur utan att känna sig överväldigad.
+* **Erik, 84, Malmö** Pensionerad postanställd med tidiga tecken på minnesutmaningar.
+  * Önskemål: Komma ihåg dagliga mediciner, hålla koll på läkarbesök, granska "vad gjorde jag idag?" och bo kvar hemma självständigt.
+  * Behov: Strukturerade dagliga påminnelser, familjen kan lägga till foton och minnen för sammanhang, och tydliga visuella signaler för rutiner och scheman.
 
 3.2 Marknadssegment och potential
 

@@ -1,17 +1,17 @@
 // Center Panel - Main conversation area
+import { Button } from "@/components/ui/shadcn/button";
+import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
+import {
+    Copy,
+    Mic,
+    MoreHorizontal,
+    RotateCcw,
+    Send,
+    ThumbsDown,
+    ThumbsUp
+} from "lucide-react";
 import React from "react";
 import { useThreePanel } from "../context/ThreePanelContext";
-import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
-import { Button } from "@/components/ui/shadcn/button";
-import { 
-  MoreHorizontal, 
-  Mic, 
-  Send, 
-  ThumbsUp, 
-  ThumbsDown,
-  Copy,
-  RotateCcw
-} from "lucide-react";
 
 export const CenterPanel: React.FC = () => {
   const { title, subtitle, chat } = useThreePanel();

@@ -1,6 +1,6 @@
 // ThreePanel Context - manages state for the three-panel interface
-import React, { createContext, useContext } from "react";
 import type { ReactNode } from "react";
+import React, { createContext, useContext } from "react";
 
 export type Source = {
   id: string;

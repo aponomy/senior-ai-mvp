@@ -1,10 +1,10 @@
 // Left Panel - Displays document sources
+import { Button } from "@/components/ui/shadcn/button";
+import { Checkbox } from "@/components/ui/shadcn/checkbox";
+import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
+import { Copy, FileText, Globe, Search } from "lucide-react";
 import React from "react";
 import { useThreePanel } from "../context/ThreePanelContext";
-import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
-import { Checkbox } from "@/components/ui/shadcn/checkbox";
-import { Button } from "@/components/ui/shadcn/button";
-import { Search, Globe, FileText, Copy } from "lucide-react";
 
 export const LeftPanel: React.FC = () => {
   const { sources } = useThreePanel();

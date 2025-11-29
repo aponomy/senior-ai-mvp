@@ -118,6 +118,11 @@ Needs: Multi-day memory • Safe exploration • Maintain independence
 Wants: Create digital art • Explore music • Collaborate with grandkids  
 Needs: Non-destructive branching • Task resumption • Structure without overwhelm
 
+## Erik, 84 | Malmö
+**Retired postal worker, early memory challenges**
+Wants: Remember medications • Track appointments • Review daily activities • Stay independent
+Needs: Daily reminders • Family adds memories/photos • Clear visual cues for routines
+
 ---
 
 ## Market Segments
